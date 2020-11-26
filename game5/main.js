@@ -6,23 +6,27 @@ const { getCreepsFromRole } = require('util');
 
 // E35N2
 
+const MAX_BUILDER = 4;
+const MAX_UPGRADERS = 2;
+const MAX_HARVESTERS = 3;
+
 function spawnCreeps() {
     const harvesters = getCreepsFromRole('harvester');
-    if (harvesters.length < 4) {
+    if (harvesters.length < MAX_HARVESTERS) {
         Memory.buildingCreeps = true;
         spawn('harvester').from('Spawn1');
         return;
     }
 
     const upgraders = getCreepsFromRole('upgrader');
-    if (upgraders.length < 1) {
+    if (upgraders.length < MAX_UPGRADERS) {
         Memory.buildingCreeps = true;
         spawn('upgrader').from('Spawn1');
         return;
     }
 
     const builders = getCreepsFromRole('builder');
-    if (builders.length < 2) {
+    if (builders.length < MAX_BUILDER) {
         Memory.buildingCreeps = true;
         spawn('builder').from('Spawn1');
         return;
