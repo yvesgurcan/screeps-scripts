@@ -7,8 +7,14 @@ const { getCreepsFromRole } = require('util');
 // E35N2
 
 function spawnCreeps() {
+    const harvesters = getCreepsFromRole('harvester');
+    if (harvesters.length < 4) {
+        spawn('harvester').from('Spawn1');
+        return;
+    }
+
     const upgraders = getCreepsFromRole('upgrader');
-    if (upgraders.length < 2) {
+    if (upgraders.length < 1) {
         spawn('upgrader').from('Spawn1');
         return;
     }
@@ -16,12 +22,6 @@ function spawnCreeps() {
     const builders = getCreepsFromRole('builder');
     if (builders.length < 2) {
         spawn('builder').from('Spawn1');
-        return;
-    }
-
-    const harvesters = getCreepsFromRole('harvester');
-    if (harvesters.length < 4) {
-        spawn('harvester').from('Spawn1');
         return;
     }
 }
