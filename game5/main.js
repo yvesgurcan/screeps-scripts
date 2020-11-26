@@ -28,8 +28,10 @@ function spawnCreeps() {
         return;
     }
 
-    console.log('Creep building queue empty.');
-    Memory.buildingCreeps = false;
+    if (Memory.buildingCreeps === true) {
+        console.log('Creep building queue empty.');
+        Memory.buildingCreeps = false;
+    }
 }
 
 function runRoles() {

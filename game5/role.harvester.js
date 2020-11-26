@@ -4,6 +4,7 @@ const { harvest } = require('util');
 const roleHarvester = {
     /** @param {Creep} creep **/
     run: function (creep) {
+        // No need to harvest if we're not building creeps
         if (!Memory.buildingCreeps) {
             roleBuilder.run(creep);
             return;
