@@ -6,12 +6,9 @@ function spawn(creepType) {
         const creepNumber = getCreepNamesFromType(creepType).length + 1;
         const spawnResult = Game.spawns[spawnerName].spawnCreep(
             creepActions,
-            `${creepType}${creepNumber}`
+            `${creepType}${creepNumber}`,
+            { memory: { type: creepType } }
         );
-
-        if (spawnResult === OK) {
-            Game.creeps[`${creepType}${creepNumber}`].memory.type = creepType;
-        }
     }
 
     return {

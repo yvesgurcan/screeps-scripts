@@ -6,34 +6,21 @@ function assignSourceFromList(sources) {
     return sources[randomNumber];
 }
 
-function harvest() {
-    function and(action) {
-        return function (creepName) {
-            console.log('creepName', creepName);
-            const creep = Game.creeps[creepName];
-            if (creep.store.getFreeCapacity() > 0) {
-                const sources = creep.room.find(FIND_SOURCES);
-                const source = assignSourceFromList(sources);
+function harvest(spawnerName) {
+    return function (creepName) {
+        const creep = Game.creeps[creepName];
+        if (creep.store.getFreeCapacity() > 0) {
+            const sources = creep.room.find(FIND_SOURCES);
+            const source = assignSourceFromList(sources);
 
-                const harvestResult = creep.harvest(source);
-                if (harvestResult === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(source);
-                }
-
-                return;
+            const harvestResult = creep.harvest(source);
+            if (harvestResult === ERR_NOT_IN_RANGE) {
+                creep.moveTo(source);
             }
-        };
-    }
 
-    return {
-        and
-    };
-}
+            return;
+        }
 
-function transfer(spawnerName) {
-    console.log('spawnerName', spawnerName);
-    return function (creep) {
-        console.log('creep', creep);
         const transferResult = creep.transfer(
             Game.spawns[spawnerName],
             RESOURCE_ENERGY
@@ -44,4 +31,4 @@ function transfer(spawnerName) {
     };
 }
 
-module.exports = { harvest, transfer };
+module.exports = harvest;
