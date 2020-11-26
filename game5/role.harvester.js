@@ -1,8 +1,14 @@
+const roleBuilder = require('role.builder');
 const { harvest } = require('util');
 
 const roleHarvester = {
     /** @param {Creep} creep **/
     run: function (creep) {
+        if (!Memory.buildingCreeps) {
+            roleBuilder.run(creep);
+            return;
+        }
+
         if (creep.store.getFreeCapacity() > 0) {
             harvest(creep);
         } else {
