@@ -8,7 +8,10 @@ function spawn(creepRole, customCreepActions) {
         const creepName = `${capitalize(creepRole)}${creepId}`;
 
         Game.spawns[spawnerName].spawnCreep(creepActions, creepName, {
-            memory: { role: creepRole, id: creepId }
+            memory: {
+                role: creepRole,
+                id: creepId
+            }
         });
 
         // Visuals

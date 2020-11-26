@@ -3,6 +3,7 @@ const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
 const spawn = require('spawn');
 const { getCreepsFromRole } = require('util');
+const gameInfo = require('gameInfo');
 
 const MAIN_ROOM = 'E35N2';
 
@@ -71,47 +72,6 @@ function runRoles() {
     }
 }
 
-function roomInfo() {
-    for (const roomName in Game.rooms) {
-        if (!Memory.rooms) {
-            Memory.rooms = {};
-        }
-
-        if (!Memory.rooms[roomName]) {
-            Memory.rooms[roomName] = {
-                energy: 0,
-                sites: 0
-            };
-        }
-
-        const energyAvailable = Game.rooms[roomName].energyAvailable;
-        if (Memory.rooms[roomName].energy !== energyAvailable) {
-            Memory.rooms[roomName].energy = energyAvailable;
-            console.log(
-                `Energy in room ${roomName}: ${Memory.rooms[roomName].energy}`
-            );
-        }
-
-        const energyCapacity = Game.rooms[roomName].energyCapacityAvailable;
-        if (Memory.rooms[roomName].energyCapacity !== energyCapacity) {
-            Memory.rooms[roomName].energyCapacity = energyCapacity;
-            console.log(
-                `Max energy capacity in room ${roomName}: ${Memory.rooms[roomName].energyCapacity}`
-            );
-        }
-
-        const sites = Game.rooms[roomName].find(FIND_CONSTRUCTION_SITES).length;
-        if (Memory.rooms[roomName].sites !== sites) {
-            Memory.rooms[roomName].sites = sites;
-            console.log(
-                `Construction sites in room ${roomName}: ${
-                    Memory.rooms[roomName].sites
-                } (grand travaux: ${sites > GRAND_TRAVAUX})`
-            );
-        }
-    }
-}
-
 module.exports.loop = function () {
     /*
     var tower = Game.getObjectById('70bcb26c6b5d0133e7b33b2d');
@@ -133,7 +93,17 @@ module.exports.loop = function () {
     }
     */
 
-    roomInfo();
+    if (!Memory.gameInfo) {
+        Memory.gameInfo = () => {
+            console.log('===============');
+            gameInfo(true);
+            console.log('===============');
+            return '';
+        };
+    }
+
+    gameInfo();
+
     spawnCreeps();
     runRoles();
 };
