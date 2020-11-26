@@ -7,10 +7,16 @@ const { getCreepsFromRole } = require('util');
 // E35N2
 
 const MAX_BUILDER = 4;
+const MAX_BUILDER_GRAND_TRAVAUX = MAX_BUILDER * 2;
+const GRAND_TRAVAUX = 10;
+
 const MAX_UPGRADERS = 2;
 const MAX_HARVESTERS = 3;
 
 function spawnCreeps() {
+    const constructionSites = Game.rooms['E35N2'].find(FIND_CONSTRUCTION_SITES)
+        .length;
+
     const harvesters = getCreepsFromRole('harvester');
     if (harvesters.length < MAX_HARVESTERS) {
         Memory.buildingCreeps = true;
@@ -27,6 +33,15 @@ function spawnCreeps() {
 
     const builders = getCreepsFromRole('builder');
     if (builders.length < MAX_BUILDER) {
+        Memory.buildingCreeps = true;
+        spawn('builder').from('Spawn1');
+        return;
+    }
+
+    if (
+        constructionSites > GRAND_TRAVAUX &&
+        builders.length < MAX_BUILDER_GRAND_TRAVAUX
+    ) {
         Memory.buildingCreeps = true;
         spawn('builder').from('Spawn1');
         return;
