@@ -22,7 +22,7 @@ var roleUpgrader = {
                 });
             }
         } else {
-            harvest(creep);
+            harvest();
         }
     }
 };
