@@ -1,11 +1,18 @@
 const roleBuilder = require('role.builder');
 const { harvest } = require('util');
 
+const MAIN_ROOM = 'E35N2';
+
 const roleHarvester = {
     /** @param {Creep} creep **/
     run: function (creep) {
-        // No need to harvest if we're not building creeps
-        if (!Memory.buildingCreeps) {
+        const roomName = creep.room.name;
+        // Switch to building if creep queue is empty and energy capacity is maxed out
+        if (
+            Memory.rooms[roomName].energy ===
+                Memory.rooms[roomName].energyCapacity &&
+            Memory.rooms[roomName].creepsQueueEmpty
+        ) {
             roleBuilder.run(creep);
             return;
         }

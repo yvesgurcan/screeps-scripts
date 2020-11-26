@@ -4,7 +4,7 @@ const roleBuilder = require('role.builder');
 const spawn = require('spawn');
 const { getCreepsFromRole } = require('util');
 
-// E35N2
+const MAIN_ROOM = 'E35N2';
 
 const MAX_BUILDER = 4;
 const MAX_BUILDER_GRAND_TRAVAUX = MAX_BUILDER * 2;
@@ -14,26 +14,27 @@ const MAX_UPGRADERS = 2;
 const MAX_HARVESTERS = 3;
 
 function spawnCreeps() {
-    const constructionSites = Game.rooms['E35N2'].find(FIND_CONSTRUCTION_SITES)
-        .length;
+    const constructionSites = Game.rooms[MAIN_ROOM].find(
+        FIND_CONSTRUCTION_SITES
+    ).length;
 
     const harvesters = getCreepsFromRole('harvester');
     if (harvesters.length < MAX_HARVESTERS) {
-        Memory.buildingCreeps = true;
+        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
         spawn('harvester').from('Spawn1');
         return;
     }
 
     const upgraders = getCreepsFromRole('upgrader');
     if (upgraders.length < MAX_UPGRADERS) {
-        Memory.buildingCreeps = true;
+        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
         spawn('upgrader').from('Spawn1');
         return;
     }
 
     const builders = getCreepsFromRole('builder');
     if (builders.length < MAX_BUILDER) {
-        Memory.buildingCreeps = true;
+        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
         spawn('builder').from('Spawn1');
         return;
     }
@@ -42,14 +43,14 @@ function spawnCreeps() {
         constructionSites > GRAND_TRAVAUX &&
         builders.length < MAX_BUILDER_GRAND_TRAVAUX
     ) {
-        Memory.buildingCreeps = true;
+        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
         spawn('builder').from('Spawn1');
         return;
     }
 
-    if (Memory.buildingCreeps === true) {
+    if (Memory.rooms[MAIN_ROOM].creepsQueueEmpty === false) {
         console.log('Creep building queue empty.');
-        Memory.buildingCreeps = false;
+        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = true;
     }
 }
 
@@ -70,15 +71,43 @@ function runRoles() {
     }
 }
 
-function displayInfo() {
-    for (var name in Game.rooms) {
-        if (!Memory.roomEnergy) {
-            Memory.roomEnergy = {};
+function roomInfo() {
+    for (const roomName in Game.rooms) {
+        if (!Memory.rooms) {
+            Memory.rooms = {};
         }
 
-        if (Memory.roomEnergy[name] !== Game.rooms[name].energyAvailable) {
-            Memory.roomEnergy[name] = Game.rooms[name].energyAvailable;
-            console.log(`Energy in room ${name}: ${Memory.roomEnergy[name]}`);
+        if (!Memory.rooms[roomName]) {
+            Memory.rooms[roomName] = {
+                energy: 0,
+                sites: 0
+            };
+        }
+
+        const energyAvailable = Game.rooms[roomName].energyAvailable;
+        if (Memory.rooms[roomName].energy !== energyAvailable) {
+            Memory.rooms[roomName].energy = energyAvailable;
+            console.log(
+                `Energy in room ${roomName}: ${Memory.rooms[roomName].energy}`
+            );
+        }
+
+        const energyCapacity = Game.rooms[roomName].energyCapacityAvailable;
+        if (Memory.rooms[roomName].energyCapacity !== energyCapacity) {
+            Memory.rooms[roomName].energyCapacity = energyCapacity;
+            console.log(
+                `Max energy capacity in room ${roomName}: ${Memory.rooms[roomName].energyCapacity}`
+            );
+        }
+
+        const sites = Game.rooms[roomName].find(FIND_CONSTRUCTION_SITES).length;
+        if (Memory.rooms[roomName].sites !== sites) {
+            Memory.rooms[roomName].sites = sites;
+            console.log(
+                `Construction sites in room ${roomName}: ${
+                    Memory.rooms[roomName].sites
+                } (grand travaux: ${sites > GRAND_TRAVAUX})`
+            );
         }
     }
 }
@@ -104,7 +133,7 @@ module.exports.loop = function () {
     }
     */
 
-    displayInfo();
+    roomInfo();
     spawnCreeps();
     runRoles();
 };
