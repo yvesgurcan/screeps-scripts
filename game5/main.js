@@ -2,8 +2,9 @@ const roleHarvester = require('role.harvester');
 const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
 const spawnCreeps = require('spawnCreeps');
-const { defendRooms, cleanUpCreepMemory } = require('util');
 const gameInfo = require('gameInfo');
+const queueConstruction = require('queueConstruction');
+const { defendRooms, cleanUpCreepMemory } = require('util');
 
 function runRoles() {
     for (const name in Game.creeps) {
@@ -37,4 +38,5 @@ module.exports.loop = function () {
     runRoles();
     defendRooms();
     cleanUpCreepMemory();
+    queueConstruction();
 };
