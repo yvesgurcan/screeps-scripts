@@ -5,7 +5,8 @@ const {
     MAX_UPGRADERS,
     MAX_HARVESTERS,
     MAX_BUILDER,
-    MAX_BUILDER_GRAND_TRAVAUX
+    MAX_BUILDER_GRAND_TRAVAUX,
+    MAX_MAINTAINERS
 } = constants;
 
 function gameInfo(reportAll = false) {
@@ -69,6 +70,7 @@ function gameInfo(reportAll = false) {
         Memory.roles = {};
     }
 
+    // TODO: Should be per room
     const harvesters = getCreepsFromRole('harvester').length;
     if (reportAll || Memory.roles.harvesters !== harvesters) {
         Memory.roles.harvesters = harvesters;
@@ -82,13 +84,7 @@ function gameInfo(reportAll = false) {
     const builders = getCreepsFromRole('builder').length;
     if (reportAll || Memory.roles.builders !== builders) {
         Memory.roles.builders = builders;
-        console.log(
-            `Builders: ${Memory.roles.builders} (max: ${
-                GRAND_TRAVAUX
-                    ? Memory.roles.builders >= MAX_BUILDER_GRAND_TRAVAUX
-                    : Memory.roles.builders >= MAX_BUILDER
-            })`
-        );
+        console.log(`Builders: ${Memory.roles.builders}`);
     }
 
     const upgraders = getCreepsFromRole('upgrader').length;
@@ -97,6 +93,16 @@ function gameInfo(reportAll = false) {
         console.log(
             `Upgraders: ${Memory.roles.upgraders} (max: ${
                 Memory.roles.upgraders >= MAX_UPGRADERS
+            })`
+        );
+    }
+
+    const maintainers = getCreepsFromRole('maintainer').length;
+    if (reportAll || Memory.roles.maintainers !== maintainers) {
+        Memory.roles.maintainers = maintainers;
+        console.log(
+            `Maintainers: ${Memory.roles.maintainers} (max: ${
+                Memory.roles.maintainers >= MAX_MAINTAINERS
             })`
         );
     }

@@ -5,18 +5,22 @@ const {
     MAX_BUILDER,
     MAX_BUILDER_GRAND_TRAVAUX,
     MAX_UPGRADERS,
-    MAX_HARVESTERS
+    MAX_HARVESTERS,
+    MAX_MAINTAINERS
 } = require('constants');
 
 function spawnCreeps() {
-    const constructionSites = Game.rooms[MAIN_ROOM].find(
-        FIND_CONSTRUCTION_SITES
-    ).length;
-
     const harvesters = getCreepsFromRole('harvester');
     if (harvesters.length < MAX_HARVESTERS) {
         Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
         spawn('harvester').from('Spawn1');
+        return;
+    }
+
+    const maintainers = getCreepsFromRole('maintainer');
+    if (maintainers.length < MAX_MAINTAINERS) {
+        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
+        spawn('maintainer').from('Spawn1');
         return;
     }
 
@@ -33,6 +37,10 @@ function spawnCreeps() {
         spawn('builder').from('Spawn1');
         return;
     }
+
+    const constructionSites = Game.rooms[MAIN_ROOM].find(
+        FIND_CONSTRUCTION_SITES
+    ).length;
 
     if (
         constructionSites > GRAND_TRAVAUX &&
@@ -98,6 +106,9 @@ function getCreepActionsFromRole(creepRole) {
         }
         case 'upgrader': {
             return [WORK, CARRY, CARRY, MOVE, MOVE];
+        }
+        case 'maintainer': {
+            return [WORK, CARRY, CARRY, MOVE];
         }
     }
 }

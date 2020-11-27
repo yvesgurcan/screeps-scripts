@@ -1,6 +1,7 @@
 const roleHarvester = require('role.harvester');
 const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
+const roleMaintainer = require('role.maintainer');
 const spawnCreeps = require('spawnCreeps');
 const gameInfo = require('gameInfo');
 const queueConstruction = require('queueConstruction');
@@ -19,6 +20,10 @@ function runRoles() {
 
         if (creep.memory.role === 'builder') {
             roleBuilder.run(creep);
+        }
+
+        if (creep.memory.role === 'maintainer') {
+            roleMaintainer(creep);
         }
     }
 }
