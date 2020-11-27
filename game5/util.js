@@ -2,11 +2,6 @@ function getCreepsFromRole(creepRole) {
     return _.filter(Game.creeps, creep => creep.memory.role === creepRole);
 }
 
-function getSource(creep, sourceIndex) {
-    const sources = creep.room.find(FIND_SOURCES);
-    return sources[sourceIndex || 0];
-}
-
 function pickNumberInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -49,7 +44,13 @@ function cleanUpCreepMemory() {
     }
 }
 
+function getSource(creep, sourceIndex) {
+    const sources = creep.room.find(FIND_SOURCES);
+    return sources[sourceIndex || 0];
+}
+
 function harvest(creep) {
+    // TODO: Distribute sources more intelligently
     let sourceIndex = 1;
     if (creep.memory.role === 'harvester' || creep.memory.role === 'upgrader') {
         sourceIndex = 0;

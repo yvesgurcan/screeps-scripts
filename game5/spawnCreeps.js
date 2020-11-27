@@ -88,13 +88,16 @@ function spawn(creepRole, customCreepActions) {
 function getCreepActionsFromRole(creepRole) {
     switch (creepRole) {
         default: {
-            return [WORK, CARRY, MOVE];
+            return [WORK, CARRY, CARRY, MOVE, MOVE];
+        }
+        case 'builder': {
+            return [WORK, CARRY, CARRY, MOVE, MOVE];
         }
         case 'harvester': {
-            return [WORK, CARRY, MOVE, MOVE];
+            return [WORK, CARRY, CARRY, MOVE, MOVE];
         }
         case 'upgrader': {
-            return [WORK, CARRY, MOVE, MOVE];
+            return [WORK, CARRY, CARRY, MOVE, MOVE];
         }
     }
 }
