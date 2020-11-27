@@ -1,16 +1,20 @@
-const { getCreepActionsFromRole, capitalize } = require('util');
+const { getCreepActionsFromRole, capitalize, getTime } = require('util');
 
 function spawn(creepRole, customCreepActions) {
     function from(spawnerName) {
         const creepActions =
             customCreepActions || getCreepActionsFromRole(creepRole);
-        const creepId = Game.time;
-        const creepName = `${capitalize(creepRole)}${creepId}`;
+
+        const {
+            format: { shortLivedStamp }
+        } = getTime();
+
+        const creepName = `${capitalize(creepRole)}-${shortLivedStamp}`;
 
         Game.spawns[spawnerName].spawnCreep(creepActions, creepName, {
             memory: {
                 role: creepRole,
-                id: creepId
+                stamp: shortLivedStamp
             }
         });
 

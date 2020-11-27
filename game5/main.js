@@ -2,7 +2,7 @@ const roleHarvester = require('role.harvester');
 const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
 const spawn = require('spawn');
-const { getCreepsFromRole, defendRooms } = require('util');
+const { getCreepsFromRole, defendRooms, cleanUpCreepMemory } = require('util');
 const gameInfo = require('gameInfo');
 
 const MAIN_ROOM = 'E35N2';
@@ -73,26 +73,6 @@ function runRoles() {
 }
 
 module.exports.loop = function () {
-    /*
-    var tower = Game.getObjectById('70bcb26c6b5d0133e7b33b2d');
-    if (tower) {
-        var closestDamagedStructure = tower.pos.findClosestByRange(
-            FIND_STRUCTURES,
-            {
-                filter: structure => structure.hits < structure.hitsMax
-            }
-        );
-        if (closestDamagedStructure) {
-            tower.repair(closestDamagedStructure);
-        }
-
-        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        if (closestHostile) {
-            tower.attack(closestHostile);
-        }
-    }
-    */
-
     if (!Memory.gameInfo) {
         Memory.gameInfo = () => {
             console.log('===============');
@@ -106,4 +86,5 @@ module.exports.loop = function () {
     spawnCreeps();
     runRoles();
     defendRooms();
+    cleanUpCreepMemory();
 };
