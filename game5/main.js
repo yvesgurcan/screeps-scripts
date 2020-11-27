@@ -2,17 +2,17 @@ const roleHarvester = require('role.harvester');
 const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
 const spawn = require('spawn');
-const { getCreepsFromRole } = require('util');
+const { getCreepsFromRole, defendRooms } = require('util');
 const gameInfo = require('gameInfo');
 
 const MAIN_ROOM = 'E35N2';
 
 const MAX_BUILDER = 4;
-const MAX_BUILDER_GRAND_TRAVAUX = MAX_BUILDER * 2;
+const MAX_BUILDER_GRAND_TRAVAUX = MAX_BUILDER + 2;
 const GRAND_TRAVAUX = 10;
 
-const MAX_UPGRADERS = 2;
-const MAX_HARVESTERS = 3;
+const MAX_UPGRADERS = 5;
+const MAX_HARVESTERS = 9;
 
 function spawnCreeps() {
     const constructionSites = Game.rooms[MAIN_ROOM].find(
@@ -103,7 +103,7 @@ module.exports.loop = function () {
     }
 
     gameInfo();
-
     spawnCreeps();
     runRoles();
+    defendRooms();
 };
