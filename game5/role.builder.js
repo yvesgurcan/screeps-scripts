@@ -1,8 +1,18 @@
+const roleUpgrader = require('role.upgrader');
 const { harvest } = require('util');
 
 const roleBuilder = {
     /** @param {Creep} creep **/
     run: function (creep) {
+        const roomName = creep.room.name;
+
+        // Switch task if no construction sites exist
+        if (Memory.rooms[roomName].sites <= 0) {
+            // Default to upgrade control room
+            roleUpgrader.run(creep);
+            return;
+        }
+
         if (creep.memory.building && creep.store[RESOURCE_ENERGY] === 0) {
             creep.memory.building = false;
             creep.say('🔄 harvest');

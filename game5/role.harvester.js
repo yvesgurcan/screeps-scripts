@@ -1,19 +1,26 @@
 const roleBuilder = require('role.builder');
+const roleUpgrader = require('role.upgrader');
 const { harvest } = require('util');
-
-const MAIN_ROOM = 'E35N2';
 
 const roleHarvester = {
     /** @param {Creep} creep **/
     run: function (creep) {
         const roomName = creep.room.name;
-        // Switch to building if creep queue is empty and energy capacity is maxed out
+
+        // Switch task if creep queue is empty and energy capacity is maxed out
         if (
             Memory.rooms[roomName].energy ===
                 Memory.rooms[roomName].energyCapacity &&
             Memory.rooms[roomName].creepsQueueEmpty
         ) {
-            roleBuilder.run(creep);
+            // Construction sites exist
+            if (Memory.rooms[roomName].sites > 0) {
+                roleBuilder.run(creep);
+                return;
+            }
+
+            // Default to upgrade control room
+            roleUpgrader.run(creep);
             return;
         }
 

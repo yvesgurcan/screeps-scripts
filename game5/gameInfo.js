@@ -1,8 +1,12 @@
 const { getCreepsFromRole } = require('util');
-
-const GRAND_TRAVAUX = 10;
+const constants = require('constants');
+const { GRAND_TRAVAUX } = constants;
 
 function gameInfo(reportAll = false) {
+    if (reportAll) {
+        console.log(`Constants: ${JSON.stringify(constants)}`);
+    }
+
     if (!Memory.rooms) {
         Memory.rooms = {};
     }

@@ -2,14 +2,6 @@ function getCreepsFromRole(creepRole) {
     return _.filter(Game.creeps, creep => creep.memory.role === creepRole);
 }
 
-function getCreepActionsFromRole(creepRole) {
-    switch (creepRole) {
-        default: {
-            return [WORK, CARRY, MOVE];
-        }
-    }
-}
-
 function getSource(creep, sourceIndex) {
     const sources = creep.room.find(FIND_SOURCES);
     return sources[sourceIndex || 0];
@@ -26,7 +18,6 @@ function capitalize(string) {
 function getTime() {
     const now = new Date();
     now.setHours(now.getHours() - 8);
-    now.setMinutes(1);
 
     const [month, date, year] = now.toLocaleDateString('en-US').split('/');
     const [hour, minute, second] = now
@@ -105,7 +96,6 @@ function defendRooms() {
 
 module.exports = {
     getCreepsFromRole,
-    getCreepActionsFromRole,
     pickNumberInRange,
     capitalize,
     getTime,
