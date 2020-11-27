@@ -35,10 +35,10 @@ const CONSTRUCTION_QUEUE = [
 
 const GRAND_TRAVAUX = 10;
 
-const MAX_BUILDER = 4;
+const MAX_BUILDER = 6;
 const MAX_BUILDER_GRAND_TRAVAUX = MAX_BUILDER + 2;
 
-const MAX_UPGRADERS = 6;
+const MAX_UPGRADERS = 12;
 const MAX_HARVESTERS = 10;
 
 module.exports = {
