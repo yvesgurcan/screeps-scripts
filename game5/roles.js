@@ -1,25 +1,24 @@
-const roleHarvester = require('role.harvester');
-const roleUpgrader = require('role.upgrader');
-const roleBuilder = require('role.builder');
-const roleMaintainer = require('role.maintainer');
+const harvesterRoutine = require('role.harvester');
+const upgraderRoutine = require('role.upgrader');
+const builderRoutine = require('role.builder');
+const maintainerRoutine = require('role.maintainer');
+
+const routines = {
+    harvesterRoutine,
+    upgraderRoutine,
+    builderRoutine,
+    maintainerRoutine
+};
 
 function runRoles() {
     for (const name in Game.creeps) {
         const creep = Game.creeps[name];
-        if (creep.memory.role === 'harvester') {
-            roleHarvester.run(creep);
-        }
 
-        if (creep.memory.role === 'upgrader') {
-            roleUpgrader.run(creep);
-        }
-
-        if (creep.memory.role === 'builder') {
-            roleBuilder.run(creep);
-        }
-
-        if (creep.memory.role === 'maintainer') {
-            roleMaintainer(creep);
+        try {
+            routines[`${creep.memory.role}Routine`](creep);
+        } catch (error) {
+            console.log('Error while executing routine.');
+            console.log(error.stack);
         }
     }
 }

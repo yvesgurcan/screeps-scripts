@@ -4,6 +4,12 @@ const MAX_UPGRADERS = 4;
 const MAX_BUILDER = 6;
 const MAX_BUILDER_GRANDS_TRAVAUX = MAX_BUILDER + 2;
 
+const CONSTRUCTION_QUEUE = [];
+
+const GRANDS_TRAVAUX = 10;
+
+// const MAIN_ROOM = 'E35N2';
+
 const ROLES = {
     harvester: {
         name: 'harvester',
@@ -23,14 +29,7 @@ const ROLES = {
     }
 };
 
-const GRANDS_TRAVAUX = 10;
-
-const MAIN_ROOM = 'E35N2';
-
-const CONSTRUCTION_QUEUE = [];
-
 module.exports = {
-    MAIN_ROOM,
     GRANDS_TRAVAUX,
     MAX_BUILDER,
     MAX_BUILDER_GRANDS_TRAVAUX,

@@ -30,7 +30,7 @@ function getTime() {
         minute,
         second,
         format: {
-            shortLivedStamp: `${paddedDate}-${hour}-${minute}-${second}`
+            shortLivedStamp: `${hour}-${minute}-${second}`
         }
     };
 }

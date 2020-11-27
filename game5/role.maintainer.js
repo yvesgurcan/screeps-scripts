@@ -29,12 +29,12 @@ function roleMaintainer(creep) {
         } else {
             // Construction sites exist
             if (Memory.rooms[roomName].sites > 0) {
-                roleBuilder.run(creep);
+                roleBuilder(creep);
                 return;
             }
 
             // Default to upgrade control room
-            roleUpgrader.run(creep);
+            roleUpgrader(creep);
             return;
         }
     }
