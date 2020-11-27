@@ -1,32 +1,9 @@
-const roleHarvester = require('role.harvester');
-const roleUpgrader = require('role.upgrader');
-const roleBuilder = require('role.builder');
-const roleMaintainer = require('role.maintainer');
 const spawnCreeps = require('spawnCreeps');
 const gameInfo = require('gameInfo');
 const queueConstruction = require('queueConstruction');
-const { defendRooms, cleanUpCreepMemory } = require('util');
-
-function runRoles() {
-    for (const name in Game.creeps) {
-        const creep = Game.creeps[name];
-        if (creep.memory.role === 'harvester') {
-            roleHarvester.run(creep);
-        }
-
-        if (creep.memory.role === 'upgrader') {
-            roleUpgrader.run(creep);
-        }
-
-        if (creep.memory.role === 'builder') {
-            roleBuilder.run(creep);
-        }
-
-        if (creep.memory.role === 'maintainer') {
-            roleMaintainer(creep);
-        }
-    }
-}
+const { runRoles } = require('roles');
+const defend = require('defend');
+const { cleanUpCreepMemory } = require('util');
 
 module.exports.loop = function () {
     if (!Memory.gameInfo) {
@@ -41,7 +18,7 @@ module.exports.loop = function () {
     gameInfo();
     spawnCreeps();
     runRoles();
-    defendRooms();
+    defend();
     cleanUpCreepMemory();
     queueConstruction();
 };

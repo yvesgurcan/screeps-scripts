@@ -1,11 +1,11 @@
 const { getCreepsFromRole } = require('util');
 const constants = require('constants');
 const {
-    GRAND_TRAVAUX,
+    GRANDS_TRAVAUX,
     MAX_UPGRADERS,
     MAX_HARVESTERS,
     MAX_BUILDER,
-    MAX_BUILDER_GRAND_TRAVAUX,
+    MAX_BUILDER_GRANDS_TRAVAUX,
     MAX_MAINTAINERS
 } = constants;
 
@@ -61,7 +61,7 @@ function gameInfo(reportAll = false) {
             console.log(
                 `Construction sites in room ${roomName}: ${
                     Memory.rooms[roomName].sites
-                } (grand travaux: ${sites > GRAND_TRAVAUX})`
+                } (grand travaux: ${sites > GRANDS_TRAVAUX})`
             );
         }
     }

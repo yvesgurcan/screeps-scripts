@@ -1,59 +1,52 @@
 const { capitalize, getTime, getCreepsFromRole } = require('util');
 const {
     MAIN_ROOM,
-    GRAND_TRAVAUX,
-    MAX_BUILDER,
-    MAX_BUILDER_GRAND_TRAVAUX,
-    MAX_UPGRADERS,
-    MAX_HARVESTERS,
-    MAX_MAINTAINERS
+    GRANDS_TRAVAUX,
+    MAX_BUILDER_GRANDS_TRAVAUX,
+    ROLES
 } = require('constants');
 
 function spawnCreeps() {
-    const harvesters = getCreepsFromRole('harvester');
-    if (harvesters.length < MAX_HARVESTERS) {
-        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
-        spawn('harvester').from('Spawn1');
-        return;
-    }
+    try {
+        let nextSpawnDecided = false;
 
-    const maintainers = getCreepsFromRole('maintainer');
-    if (maintainers.length < MAX_MAINTAINERS) {
-        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
-        spawn('maintainer').from('Spawn1');
-        return;
-    }
+        for (const roleName in ROLES) {
+            const role = ROLES[roleName];
+            const creeps = getCreepsFromRole(role.name);
 
-    const upgraders = getCreepsFromRole('upgrader');
-    if (upgraders.length < MAX_UPGRADERS) {
-        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
-        spawn('upgrader').from('Spawn1');
-        return;
-    }
+            if (creeps.length < role.max) {
+                console.log('next spawn:', role.name);
+                nextSpawnDecided = true;
+                Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
+                spawn(role.name).from('Spawn1');
+                break;
+            }
+        }
 
-    const builders = getCreepsFromRole('builder');
-    if (builders.length < MAX_BUILDER) {
-        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
-        spawn('builder').from('Spawn1');
-        return;
-    }
+        if (nextSpawnDecided) {
+            return;
+        }
 
-    const constructionSites = Game.rooms[MAIN_ROOM].find(
-        FIND_CONSTRUCTION_SITES
-    ).length;
+        const constructionSites = Game.rooms[MAIN_ROOM].find(
+            FIND_CONSTRUCTION_SITES
+        ).length;
 
-    if (
-        constructionSites > GRAND_TRAVAUX &&
-        builders.length < MAX_BUILDER_GRAND_TRAVAUX
-    ) {
-        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
-        spawn('builder').from('Spawn1');
-        return;
-    }
+        if (
+            constructionSites > GRANDS_TRAVAUX &&
+            builders.length < MAX_BUILDER_GRANDS_TRAVAUX
+        ) {
+            Memory.rooms[MAIN_ROOM].creepsQueueEmpty = false;
+            spawn('builder').from('Spawn1');
+            return;
+        }
 
-    if (Memory.rooms[MAIN_ROOM].creepsQueueEmpty === false) {
-        console.log('Creep building queue empty.');
-        Memory.rooms[MAIN_ROOM].creepsQueueEmpty = true;
+        if (Memory.rooms[MAIN_ROOM].creepsQueueEmpty === false) {
+            console.log('Creep building queue empty.');
+            Memory.rooms[MAIN_ROOM].creepsQueueEmpty = true;
+        }
+    } catch (error) {
+        console.log(`Error in creep spawning queue.`);
+        console.log(error.stack);
     }
 }
 
@@ -79,10 +72,12 @@ function spawn(creepRole, customCreepActions) {
         if (Game.spawns[spawnerName].spawning) {
             const spawningCreep =
                 Game.creeps[Game.spawns[spawnerName].spawning.name];
-            Game.spawns[spawnerName].room.visual.text(
-                '🛠️' + spawningCreep.memory.role,
-                Game.spawns[spawnerName].pos.x + 1,
-                Game.spawns[spawnerName].pos.y,
+            Game.spawns[
+                spawnerName
+            ].room.visual.text(
+                `🛠️${spawningCreep.memory.role}`,
+                Game.spawns[spawnerName].pos.x,
+                Game.spawns[spawnerName].pos.y - 1,
                 { align: 'left', opacity: 0.8 }
             );
         }

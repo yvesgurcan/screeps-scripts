@@ -17,7 +17,7 @@ function roleMaintainer(creep) {
             }
         });
         if (targets.length > 0) {
-            creep.say('🔆 maintain');
+            // creep.say('🔆maintain');
             if (
                 creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE
             ) {

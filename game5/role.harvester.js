@@ -37,6 +37,7 @@ const roleHarvester = {
                 }
             });
             if (targets.length > 0) {
+                // creep.say('🔋store');
                 if (
                     creep.transfer(targets[0], RESOURCE_ENERGY) ===
                     ERR_NOT_IN_RANGE
