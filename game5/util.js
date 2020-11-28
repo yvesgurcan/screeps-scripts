@@ -35,6 +35,10 @@ function getTime() {
     };
 }
 
+function getBodyCost(bodyParts) {
+    return _.sum(bodyParts, bodyPart => BODYPART_COST[bodyPart]);
+}
+
 function cleanUpCreepMemory() {
     for (const name in Memory.creeps) {
         if (!Game.creeps[name]) {
@@ -80,6 +84,8 @@ module.exports = {
     pickNumberInRange,
     capitalize,
     getTime,
+    getBodyCost,
+    getSource,
     cleanUpCreepMemory,
     harvest
 };
