@@ -1,3 +1,6 @@
+const HP_1MILLION = 100000000;
+const HP_250K = 250000;
+
 const SAFE_MODE_RESULTS_MAP = {
     OK: 'Success',
     ERR_NOT_OWNER: 'You are not the owner of this controller',
@@ -36,7 +39,9 @@ function defend() {
                         FIND_STRUCTURES,
                         {
                             filter: structure =>
-                                structure.hits < structure.hitsMax
+                                structure.hits < structure.hitsMax &&
+                                // Don't repait beyon 250k
+                                structure.hits < HP_250K
                         }
                     );
 
