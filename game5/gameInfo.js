@@ -27,9 +27,11 @@ function gameInfo(reportAll = false) {
             }
 
             const energyAvailable = Game.rooms[roomName].energyAvailable;
+            const energyCapacity = Game.rooms[roomName].energyCapacityAvailable;
             if (
                 reportAll ||
-                Memory.rooms[roomName].energy !== energyAvailable
+                Memory.rooms[roomName].energy !== energyAvailable ||
+                Memory.rooms[roomName].energyCapacity !== energyCapacity
             ) {
                 const diff =
                     reportAll ||
@@ -37,25 +39,16 @@ function gameInfo(reportAll = false) {
                 Memory.rooms[roomName].energy = energyAvailable;
                 if (
                     diff === true ||
+                    Memory.rooms[roomName].energyCapacity !== energyCapacity ||
                     energyAvailable % 10 === 0 ||
                     diff >= 10 ||
                     diff <= -10
                 ) {
                     console.log(
-                        `Energy in room ${roomName}: ${Memory.rooms[roomName].energy}`
+                        `Energy in room ${roomName}: ${Memory.rooms[roomName].energy}/${energyCapacity}`
                     );
                 }
-            }
-
-            const energyCapacity = Game.rooms[roomName].energyCapacityAvailable;
-            if (
-                reportAll ||
-                Memory.rooms[roomName].energyCapacity !== energyCapacity
-            ) {
                 Memory.rooms[roomName].energyCapacity = energyCapacity;
-                console.log(
-                    `Max energy capacity in room ${roomName}: ${Memory.rooms[roomName].energyCapacity}`
-                );
             }
 
             const sites = Game.rooms[roomName].find(FIND_CONSTRUCTION_SITES)
