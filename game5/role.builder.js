@@ -1,7 +1,7 @@
 const upgraderRoutine = require('role.upgrader');
 const { harvest } = require('roleUtil');
 
-function roleBuilder(creep) {
+function builderRoutine(creep) {
     const roomName = creep.room.name;
 
     // Switch task if no construction sites exist
@@ -25,7 +25,7 @@ function roleBuilder(creep) {
         if (targets.length) {
             if (creep.build(targets[0]) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(targets[0], {
-                    visualizePathStyle: { stroke: '#ffffff' }
+                    visualizePathStyle: { stroke: 'green' }
                 });
             }
         }
@@ -34,4 +34,4 @@ function roleBuilder(creep) {
     }
 }
 
-module.exports = roleBuilder;
+module.exports = builderRoutine;
