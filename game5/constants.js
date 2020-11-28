@@ -15,6 +15,7 @@ const MAIN_ROOM = 'E35N2';
 const ROLES = {
     harvester: {
         name: 'harvester',
+        types: [WOODHOUSE],
         generation: 3,
         // Fast movement and fast work
         bodyParts: [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
@@ -23,6 +24,7 @@ const ROLES = {
     },
     maintainer: {
         name: 'maintainer',
+        types: [AMMON],
         generation: 3,
         // Super fast movement and good capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
@@ -31,6 +33,7 @@ const ROLES = {
     },
     repairer: {
         name: 'repairer',
+        types: [BETH],
         generation: 1,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
@@ -39,6 +42,7 @@ const ROLES = {
     },
     upgrader: {
         name: 'upgrader',
+        types: [KRIEGER],
         generation: 3,
         // Great capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
@@ -47,6 +51,7 @@ const ROLES = {
     },
     builder: {
         name: 'builder',
+        types: [RICK],
         generation: 3,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
@@ -54,6 +59,16 @@ const ROLES = {
         color: 'green'
     }
 };
+
+const WOODHOUSE = 'Woodhouse';
+
+const AMMON = 'Ammon';
+
+const BETH = 'Beth';
+
+const KRIEGER = 'Krieger';
+
+const RICK = 'Rick';
 
 const HP = {
     HP_250K: 250000,

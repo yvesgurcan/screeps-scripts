@@ -12,6 +12,12 @@ function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.substring(1);
 }
 
+function capitalizedCharacters(string, numberOfCharacters = 2) {
+    return (
+        string.charAt(0).toUpperCase() + string.substring(1, numberOfCharacters)
+    );
+}
+
 function getTime() {
     const now = new Date();
     now.setHours(now.getHours() - 8);
@@ -61,6 +67,7 @@ module.exports = {
     getCreepsFromRole,
     pickNumberInRange,
     capitalize,
+    capitalizedCharacters,
     getTime,
     getBodyCost,
     printBodyCostForRoles,

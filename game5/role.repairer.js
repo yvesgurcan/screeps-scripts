@@ -20,10 +20,9 @@ function repairerRoutine(creep) {
             filter: structure =>
                 structure.hits < structure.hitsMax &&
                 // Don't repair beyond
-                structure.hits < HP.HP_250K
+                structure.hits < HP.HP_500K
         });
         if (targets.length > 0) {
-            // creep.say('🔆repair');
             if (creep.repair(targets[0]) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(targets[0], {
                     visualizePathStyle: { stroke: ROLES.repairer.color }

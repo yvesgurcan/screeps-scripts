@@ -1,4 +1,9 @@
-const { capitalize, getTime, getCreepsFromRole } = require('util');
+const {
+    capitalize,
+    capitalizedCharacters,
+    getTime,
+    getCreepsFromRole
+} = require('util');
 const {
     GRANDS_TRAVAUX,
     MAX_BUILDER_GRANDS_TRAVAUX,
@@ -65,17 +70,7 @@ function spawn(creepRole, customCreepActions) {
     function from(spawnerName) {
         const creepActions = customCreepActions || ROLES[creepRole].bodyParts;
 
-        const {
-            format: { shortLivedStamp }
-        } = getTime();
-
-        const creepGeneration = ROLES[creepRole].generation
-            ? `-G${ROLES[creepRole].generation}`
-            : '';
-
-        const creepName = `${capitalize(
-            creepRole
-        )}${creepGeneration}-${shortLivedStamp}`;
+        const creepName = getName(creepRole);
 
         Game.spawns[spawnerName].spawnCreep(creepActions, creepName, {
             memory: {
@@ -102,6 +97,22 @@ function spawn(creepRole, customCreepActions) {
     return {
         from
     };
+}
+
+function getName(creepRole) {
+    const {
+        format: { shortLivedStamp }
+    } = getTime();
+
+    const { types, generation } = ROLES[creepRole];
+
+    const creepType = types ? types[0] : capitalize(creepRole);
+    const creepRoleShort = types ? capitalizedCharacters(creepRole) : 'G';
+    const creepGeneration = generation || '';
+
+    const creepName = `${creepType}-${creepRoleShort}${creepGeneration}-${shortLivedStamp}`;
+
+    return creepName;
 }
 
 module.exports = spawnCreeps;
