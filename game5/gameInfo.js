@@ -1,11 +1,17 @@
-const { getCreepsFromRole, capitalize } = require('util');
+const {
+    getCreepsFromRole,
+    capitalize,
+    printBodyCostForRoles
+} = require('util');
 const constants = require('constants');
-const { GRANDS_TRAVAUX, ROLES } = constants;
+const { ROLES, ...constantsWithoutRoles } = constants;
+const { GRANDS_TRAVAUX } = constants;
 
 function gameInfo(reportAll = false) {
     try {
         if (reportAll) {
-            console.log(`Constants: ${JSON.stringify(constants)}`);
+            console.log(`Constants: ${JSON.stringify(constantsWithoutRoles)}`);
+            printBodyCostForRoles();
         }
 
         if (!Memory.rooms) {

@@ -63,8 +63,7 @@ function spawnCreeps() {
 
 function spawn(creepRole, customCreepActions) {
     function from(spawnerName) {
-        const creepActions =
-            customCreepActions || getCreepActionsFromRole(creepRole);
+        const creepActions = customCreepActions || ROLES[creepRole].bodyParts;
 
         const {
             format: { shortLivedStamp }
@@ -97,26 +96,6 @@ function spawn(creepRole, customCreepActions) {
     return {
         from
     };
-}
-
-function getCreepActionsFromRole(creepRole) {
-    switch (creepRole) {
-        default: {
-            return [WORK, CARRY, CARRY, MOVE, MOVE];
-        }
-        case 'builder': {
-            return [WORK, CARRY, CARRY, MOVE, MOVE];
-        }
-        case 'harvester': {
-            return [WORK, CARRY, CARRY, MOVE, MOVE];
-        }
-        case 'upgrader': {
-            return [WORK, CARRY, CARRY, MOVE, MOVE];
-        }
-        case 'maintainer': {
-            return [WORK, CARRY, CARRY, MOVE];
-        }
-    }
 }
 
 module.exports = spawnCreeps;

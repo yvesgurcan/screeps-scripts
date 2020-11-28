@@ -1,3 +1,5 @@
+const { ROLES } = require('constants');
+
 function getCreepsFromRole(creepRole) {
     return _.filter(Game.creeps, creep => creep.memory.role === creepRole);
 }
@@ -33,6 +35,13 @@ function getTime() {
             shortLivedStamp: `${hour}-${minute}-${second}`
         }
     };
+}
+
+function printBodyCostForRoles() {
+    for (const roleName in ROLES) {
+        const role = ROLES[roleName];
+        console.log(`Cost for ${role.name}: ${getBodyCost(role.bodyParts)}`);
+    }
 }
 
 function getBodyCost(bodyParts) {
@@ -85,6 +94,7 @@ module.exports = {
     capitalize,
     getTime,
     getBodyCost,
+    printBodyCostForRoles,
     getSource,
     cleanUpCreepMemory,
     harvest
