@@ -57,37 +57,6 @@ function cleanUpCreepMemory() {
     }
 }
 
-function getSource(creep, sourceIndex) {
-    const sources = creep.room.find(FIND_SOURCES);
-    return sources[sourceIndex || 0];
-}
-
-function harvest(creep) {
-    // TODO: Distribute sources more intelligently
-    let sourceIndex = 1;
-
-    try {
-        if (
-            creep.memory.role === 'harvester' ||
-            creep.memory.role === 'upgrader'
-        ) {
-            sourceIndex = 0;
-        }
-    } catch (error) {
-        console.log('Error while accessing creep role.');
-        console.log(error.stack);
-    }
-
-    const source = getSource(creep, sourceIndex);
-
-    if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-        // creep.say('🔄harvest');
-        creep.moveTo(source, {
-            visualizePathStyle: { stroke: '#ffaa00' }
-        });
-    }
-}
-
 module.exports = {
     getCreepsFromRole,
     pickNumberInRange,
@@ -95,7 +64,6 @@ module.exports = {
     getTime,
     getBodyCost,
     printBodyCostForRoles,
-    getSource,
     cleanUpCreepMemory,
     harvest
 };

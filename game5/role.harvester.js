@@ -1,8 +1,8 @@
-const roleBuilder = require('role.builder');
-const roleUpgrader = require('role.upgrader');
-const { harvest } = require('util');
+const builderRoutine = require('role.builder');
+const upgarderRoutine = require('role.upgrader');
+const { harvest, store } = require('roles');
 
-function roleHarvester(creep) {
+function harvesterRoutine(creep) {
     const roomName = creep.room.name;
 
     // Switch task if creep queue is empty and energy capacity is maxed out
@@ -13,38 +13,30 @@ function roleHarvester(creep) {
     ) {
         // Construction sites exist
         if (Memory.rooms[roomName].sites > 0) {
-            roleBuilder(creep);
+            builderRoutine(creep);
             return;
         }
 
         // Default to upgrade control room
-        roleUpgrader(creep);
+        upgarderRoutine(creep);
+        return;
+    }
+
+    if (creep.memory.storing && creep.store[RESOURCE_ENERGY] === 0) {
+        creep.say('🔄harvest');
+        creep.memory.storing = false;
+    }
+
+    if (creep.memory.storing) {
+        store(creep);
         return;
     }
 
     if (creep.store.getFreeCapacity() > 0) {
         harvest(creep);
     } else {
-        const targets = creep.room.find(FIND_STRUCTURES, {
-            filter: structure => {
-                return (
-                    (structure.structureType === STRUCTURE_EXTENSION ||
-                        structure.structureType === STRUCTURE_SPAWN) &&
-                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
-                );
-            }
-        });
-        if (targets.length > 0) {
-            // creep.say('🔋store');
-            if (
-                creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE
-            ) {
-                creep.moveTo(targets[0], {
-                    visualizePathStyle: { stroke: '#ffffff' }
-                });
-            }
-        }
+        store(creep);
     }
 }
 
-module.exports = roleHarvester;
+module.exports = harvesterRoutine;

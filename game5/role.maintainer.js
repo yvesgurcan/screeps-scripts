@@ -1,6 +1,6 @@
-const roleBuilder = require('role.builder');
-const roleUpgrader = require('role.upgrader');
-const { harvest } = require('util');
+const builderRoutine = require('role.builder');
+const upgraderRoutine = require('role.upgrader');
+const { harvest } = require('roles');
 
 function roleMaintainer(creep) {
     const roomName = creep.room.name;
@@ -29,12 +29,12 @@ function roleMaintainer(creep) {
         } else {
             // Construction sites exist
             if (Memory.rooms[roomName].sites > 0) {
-                roleBuilder(creep);
+                builderRoutine(creep);
                 return;
             }
 
             // Default to upgrade control room
-            roleUpgrader(creep);
+            upgraderRoutine(creep);
             return;
         }
     }

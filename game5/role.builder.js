@@ -1,5 +1,5 @@
-const roleUpgrader = require('role.upgrader');
-const { harvest } = require('util');
+const upgraderRoutine = require('role.upgrader');
+const { harvest } = require('roles');
 
 function roleBuilder(creep) {
     const roomName = creep.room.name;
@@ -7,7 +7,7 @@ function roleBuilder(creep) {
     // Switch task if no construction sites exist
     if (Memory.rooms[roomName].sites <= 0) {
         // Default to upgrade control room
-        roleUpgrader(creep);
+        upgraderRoutine(creep);
         return;
     }
 
