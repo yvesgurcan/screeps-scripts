@@ -3,18 +3,11 @@ const gameInfo = require('gameInfo');
 const queueConstruction = require('queueConstruction');
 const { runRoles } = require('roles');
 const defend = require('defend');
+const addUtilFunctions = require('addUtilFunctions');
 const { cleanUpCreepMemory } = require('util');
 
 module.exports.loop = function () {
-    if (!Memory.gameInfo) {
-        Memory.gameInfo = () => {
-            console.log('===============');
-            gameInfo(true);
-            console.log('===============');
-            return '';
-        };
-    }
-
+    addUtilFunctions();
     gameInfo();
     spawnCreeps();
     runRoles();
