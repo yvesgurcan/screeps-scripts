@@ -8,22 +8,32 @@ const {
 function spawnCreeps() {
     try {
         for (const roomName in Game.rooms) {
-            let nextSpawnDecided = false;
+            let nextSpawnCandidates = [];
 
             for (const roleName in ROLES) {
                 const role = ROLES[roleName];
                 const creeps = getCreepsFromRole(role.name);
 
+                // Gather roles that have a deficit in their number of creeps
                 if (creeps.length < role.max) {
-                    console.log('next spawn:', role.name);
-                    nextSpawnDecided = true;
-                    Memory.rooms[roomName].creepsQueueEmpty = false;
-                    spawn(role.name).from('Spawn1');
+                    nextSpawnCandidates.push({
+                        name: role.name,
+                        diff: creeps.length - role.max
+                    });
                     break;
                 }
             }
 
-            if (nextSpawnDecided) {
+            if (nextSpawnCandidates.length > 0) {
+                Memory.rooms[roomName].creepsQueueEmpty = false;
+                if (nextSpawnCandidates.length === 1) {
+                    spawn(nextSpawnCandidates[0].name).from('Spawn1');
+                    return;
+                }
+
+                // Pick role with the most dire deficit of creeps
+                nextSpawnCandidates.sort((a, b) => a.diff - b.diff);
+                spawn(nextSpawnCandidates[0].name).from('Spawn1');
                 return;
             }
 
