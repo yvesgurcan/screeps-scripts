@@ -1,5 +1,6 @@
 const upgraderRoutine = require('role.upgrader');
 const { harvest } = require('roleUtil');
+const { ROLES } = require('constants');
 
 function builderRoutine(creep) {
     const roomName = creep.room.name;
@@ -25,12 +26,12 @@ function builderRoutine(creep) {
         if (targets.length) {
             if (creep.build(targets[0]) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(targets[0], {
-                    visualizePathStyle: { stroke: 'green' }
+                    visualizePathStyle: { stroke: ROLES.builder.color }
                 });
             }
         }
     } else {
-        harvest(creep);
+        harvest(creep, ROLES.builder.color);
     }
 }
 

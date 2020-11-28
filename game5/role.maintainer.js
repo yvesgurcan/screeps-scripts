@@ -1,12 +1,13 @@
 const builderRoutine = require('role.builder');
 const upgraderRoutine = require('role.upgrader');
 const { harvest } = require('roleUtil');
+const { ROLES } = require('constants');
 
 function maintainerRoutine(creep) {
     const roomName = creep.room.name;
 
     if (creep.store.getFreeCapacity() > 0) {
-        harvest(creep);
+        harvest(creep, ROLES.maintainer.color);
     } else {
         const targets = creep.room.find(FIND_STRUCTURES, {
             filter: structure => {
@@ -22,7 +23,7 @@ function maintainerRoutine(creep) {
                 creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE
             ) {
                 creep.moveTo(targets[0], {
-                    visualizePathStyle: { stroke: 'blue' }
+                    visualizePathStyle: { stroke: ROLES.maintainer.color }
                 });
             }
             // Switch task if no tower needs energy

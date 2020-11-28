@@ -16,28 +16,32 @@ const ROLES = {
         generation: 3,
         // Fast movement and fast work
         bodyParts: [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
-        max: MAX_HARVESTERS
+        max: MAX_HARVESTERS,
+        color: 'yellow'
     },
     maintainer: {
         name: 'maintainer',
         generation: 3,
         // Super fast movement and good capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
-        max: MAX_MAINTAINERS
+        max: MAX_MAINTAINERS,
+        color: 'blue'
     },
     upgrader: {
         name: 'upgrader',
         generation: 3,
         // Great capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
-        max: MAX_UPGRADERS
+        max: MAX_UPGRADERS,
+        color: 'purple'
     },
     builder: {
         name: 'builder',
         generation: 3,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
-        max: MAX_BUILDER
+        max: MAX_BUILDER,
+        color: 'green'
     }
 };
 

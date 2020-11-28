@@ -1,4 +1,5 @@
 const { harvest } = require('roleUtil');
+const { ROLES } = require('constants');
 
 function upgraderRoutine(creep) {
     if (creep.memory.upgrading && creep.store[RESOURCE_ENERGY] === 0) {
@@ -15,11 +16,11 @@ function upgraderRoutine(creep) {
             creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE
         ) {
             creep.moveTo(creep.room.controller, {
-                visualizePathStyle: { stroke: 'purple' }
+                visualizePathStyle: { stroke: ROLES.upgrader.color }
             });
         }
     } else {
-        harvest(creep);
+        harvest(creep, ROLES.upgrader.color);
     }
 }
 

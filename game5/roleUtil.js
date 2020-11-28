@@ -19,7 +19,7 @@ function getSource(creep, sourceIndex = 0) {
     return sources[sourceIndex];
 }
 
-function harvest(creep) {
+function harvest(creep, pathColor = 'yellow') {
     // TODO: Distribute sources more intelligently
     let sourceIndex = 1;
 
@@ -39,7 +39,7 @@ function harvest(creep) {
 
     if (source && creep.harvest(source) === ERR_NOT_IN_RANGE) {
         creep.moveTo(source, {
-            visualizePathStyle: { stroke: 'yellow' }
+            visualizePathStyle: { stroke: pathColor }
         });
     }
 }
@@ -59,7 +59,7 @@ function store(creep) {
         creep.memory.storing = true;
         if (creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
             creep.moveTo(targets[0], {
-                visualizePathStyle: { stroke: '#ffffff' }
+                visualizePathStyle: { stroke: 'white' }
             });
         }
     }
