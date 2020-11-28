@@ -20,7 +20,6 @@ function spawnCreeps() {
                         name: role.name,
                         diff: creeps.length - role.max
                     });
-                    break;
                 }
             }
 
