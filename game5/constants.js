@@ -55,6 +55,13 @@ const ROLES = {
     }
 };
 
+const HP = {
+    HP_250K: 250000,
+    HP_1MILLION: 100000000,
+    HP_250K: 250000,
+    HP_500K: 500000
+};
+
 module.exports = {
     MAIN_ROOM,
     GRANDS_TRAVAUX,
@@ -64,5 +71,6 @@ module.exports = {
     MAX_HARVESTERS,
     MAX_MAINTAINERS,
     CONSTRUCTION_QUEUE,
-    ROLES
+    ROLES,
+    HP
 };

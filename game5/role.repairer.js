@@ -1,9 +1,7 @@
 const builderRoutine = require('role.builder');
 const upgraderRoutine = require('role.upgrader');
 const { harvest, isEmpty, isFull } = require('roleUtil');
-const { ROLES } = require('constants');
-
-const HP_250K = 250000;
+const { ROLES, HP } = require('constants');
 
 function repairerRoutine(creep) {
     const roomName = creep.room.name;
@@ -17,14 +15,12 @@ function repairerRoutine(creep) {
         creep.say('❤️repair');
     }
 
-    if (creep.store.getFreeCapacity() > 0) {
-        harvest(creep, ROLES.repairer.color);
-    } else {
+    if (creep.memory.repairing) {
         const targets = creep.room.find(FIND_STRUCTURES, {
             filter: structure =>
                 structure.hits < structure.hitsMax &&
-                // Don't repait beyon 250k
-                structure.hits < HP_250K
+                // Don't repair beyond
+                structure.hits < HP.HP_250K
         });
         if (targets.length > 0) {
             // creep.say('🔆repair');
@@ -45,6 +41,8 @@ function repairerRoutine(creep) {
             upgraderRoutine(creep);
             return;
         }
+    } else {
+        harvest(creep, ROLES.repairer.color);
     }
 }
 
