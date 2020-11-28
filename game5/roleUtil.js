@@ -1,6 +1,22 @@
-function getSource(creep, sourceIndex) {
+function getSource(creep, sourceIndex = 0) {
     const sources = creep.room.find(FIND_SOURCES);
-    return sources[sourceIndex || 0];
+    const source = sources[sourceIndex];
+
+    if (source.energy === 0) {
+        if (sourceIndex === 0 && sources[1].energy > 0) {
+            return sources[1];
+        }
+
+        if (sourceIndex === 1 && sources[0].energy > 0) {
+            return sources[0];
+        }
+
+        console.log(`Source 0 and 1 are both depleted.`);
+
+        return null;
+    }
+
+    return sources[sourceIndex];
 }
 
 function harvest(creep) {
@@ -21,7 +37,7 @@ function harvest(creep) {
 
     const source = getSource(creep, sourceIndex);
 
-    if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
+    if (source && creep.harvest(source) === ERR_NOT_IN_RANGE) {
         creep.moveTo(source, {
             visualizePathStyle: { stroke: 'yellow' }
         });
