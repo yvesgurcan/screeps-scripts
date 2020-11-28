@@ -4,6 +4,7 @@ const MAX_REPAIRERS = 3;
 const MAX_UPGRADERS = 3;
 const MAX_BUILDER = 4;
 const MAX_BUILDER_GRANDS_TRAVAUX = MAX_BUILDER + 2;
+const MAX_CLAIMERS = 1;
 
 const CONSTRUCTION_QUEUE = [];
 
@@ -20,6 +21,8 @@ const BETH = 'Beth';
 const KRIEGER = 'Krieger';
 
 const RICK = 'Rick';
+
+const DUNCAN = 'Duncan';
 
 // Add new roles here
 const ROLES = {
@@ -67,6 +70,15 @@ const ROLES = {
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
         max: MAX_BUILDER,
         color: 'green'
+    },
+    claimer: {
+        name: 'claimer',
+        types: [DUNCAN],
+        generation: 1,
+        // Super fast movement
+        bodyParts: [CLAIM, MOVE, MOVE, MOVE, MOVE, MOVE],
+        max: MAX_CLAIMERS,
+        color: 'orange'
     }
 };
 
