@@ -13,24 +13,28 @@ const GRANDS_TRAVAUX = 10;
 const ROLES = {
     harvester: {
         name: 'harvester',
+        generation: 3,
         // Fast movement and fast work
         bodyParts: [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
         max: MAX_HARVESTERS
     },
     maintainer: {
         name: 'maintainer',
+        generation: 3,
         // Super fast movement and good capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
         max: MAX_MAINTAINERS
     },
     upgrader: {
         name: 'upgrader',
+        generation: 3,
         // Great capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
         max: MAX_UPGRADERS
     },
     builder: {
         name: 'builder',
+        generation: 3,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
         max: MAX_BUILDER

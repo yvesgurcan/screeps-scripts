@@ -69,7 +69,13 @@ function spawn(creepRole, customCreepActions) {
             format: { shortLivedStamp }
         } = getTime();
 
-        const creepName = `${capitalize(creepRole)}-${shortLivedStamp}`;
+        const creepGeneration = ROLES[creepRole].generation
+            ? `-G${ROLES[creepRole].generation}`
+            : '';
+
+        const creepName = `${capitalize(
+            creepRole
+        )}${creepGeneration}-${shortLivedStamp}`;
 
         Game.spawns[spawnerName].spawnCreep(creepActions, creepName, {
             memory: {
