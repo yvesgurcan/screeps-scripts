@@ -1,5 +1,6 @@
 const HP_1MILLION = 100000000;
 const HP_250K = 250000;
+const HP_500K = 500000;
 
 const SAFE_MODE_RESULTS_MAP = {
     OK: 'Success',
@@ -40,8 +41,8 @@ function defend() {
                         {
                             filter: structure =>
                                 structure.hits < structure.hitsMax &&
-                                // Don't repait beyon 250k
-                                structure.hits < HP_250K
+                                // Don't repair beyond
+                                structure.hits < HP_500K
                         }
                     );
 

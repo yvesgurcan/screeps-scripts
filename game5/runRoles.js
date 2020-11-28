@@ -2,12 +2,15 @@ const harvesterRoutine = require('role.harvester');
 const upgraderRoutine = require('role.upgrader');
 const builderRoutine = require('role.builder');
 const maintainerRoutine = require('role.maintainer');
+const repairerRoutine = require('role.repairer');
 
+// Add new routines here
 const routines = {
     harvesterRoutine,
     upgraderRoutine,
     builderRoutine,
-    maintainerRoutine
+    maintainerRoutine,
+    repairerRoutine
 };
 
 function runRoles() {

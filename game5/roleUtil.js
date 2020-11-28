@@ -1,3 +1,11 @@
+function isEmpty(creep) {
+    return creep.store[RESOURCE_ENERGY] === 0;
+}
+
+function isFull(creep) {
+    return creep.store.getFreeCapacity() === 0;
+}
+
 function getSource(creep, sourceIndex = 0) {
     const sources = creep.room.find(FIND_SOURCES);
     const source = sources[sourceIndex];
@@ -71,4 +79,4 @@ function store(creep) {
     }
 }
 
-module.exports = { harvest, store };
+module.exports = { isEmpty, isFull, harvest, store };

@@ -40,6 +40,7 @@ function spawnCreeps() {
                 FIND_CONSTRUCTION_SITES
             ).length;
 
+            const builders = getCreepsFromRole('builder');
             if (
                 constructionSites > GRANDS_TRAVAUX &&
                 builders.length < MAX_BUILDER_GRANDS_TRAVAUX
