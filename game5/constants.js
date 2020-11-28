@@ -11,6 +11,16 @@ const GRANDS_TRAVAUX = 10;
 
 const MAIN_ROOM = 'E35N2';
 
+const WOODHOUSE = 'Woodhouse';
+
+const AMMON = 'Ammon';
+
+const BETH = 'Beth';
+
+const KRIEGER = 'Krieger';
+
+const RICK = 'Rick';
+
 // Add new roles here
 const ROLES = {
     harvester: {
@@ -59,16 +69,6 @@ const ROLES = {
         color: 'green'
     }
 };
-
-const WOODHOUSE = 'Woodhouse';
-
-const AMMON = 'Ammon';
-
-const BETH = 'Beth';
-
-const KRIEGER = 'Krieger';
-
-const RICK = 'Rick';
 
 const HP = {
     HP_250K: 250000,

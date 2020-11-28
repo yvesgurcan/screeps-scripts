@@ -70,12 +70,14 @@ function spawn(creepRole, customCreepActions) {
     function from(spawnerName) {
         const creepActions = customCreepActions || ROLES[creepRole].bodyParts;
 
-        const creepName = getName(creepRole);
+        const { name, stamp, type, generation } = getName(creepRole);
 
-        Game.spawns[spawnerName].spawnCreep(creepActions, creepName, {
+        Game.spawns[spawnerName].spawnCreep(creepActions, name, {
             memory: {
                 role: creepRole,
-                stamp: shortLivedStamp
+                stamp,
+                type,
+                generation
             }
         });
 
@@ -106,13 +108,14 @@ function getName(creepRole) {
 
     const { types, generation } = ROLES[creepRole];
 
-    const creepType = types ? types[0] : capitalize(creepRole);
+    const type = types ? types[0] : '';
+    const creepType = type || capitalize(creepRole);
     const creepRoleShort = types ? capitalizedCharacters(creepRole) : 'G';
     const creepGeneration = generation || '';
 
     const creepName = `${creepType}-${creepRoleShort}${creepGeneration}-${shortLivedStamp}`;
 
-    return creepName;
+    return { name: creepName, stamp: shortLivedStamp, type, generation };
 }
 
 module.exports = spawnCreeps;
