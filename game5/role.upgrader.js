@@ -1,4 +1,4 @@
-const { harvest } = require('roles');
+const { harvest } = require('roleUtil');
 
 function roleUpgrader(creep) {
     if (creep.memory.upgrading && creep.store[RESOURCE_ENERGY] === 0) {

@@ -1,28 +1,3 @@
-const harvesterRoutine = require('role.harvester');
-const upgraderRoutine = require('role.upgrader');
-const builderRoutine = require('role.builder');
-const maintainerRoutine = require('role.maintainer');
-
-const routines = {
-    harvesterRoutine,
-    upgraderRoutine,
-    builderRoutine,
-    maintainerRoutine
-};
-
-function runRoles() {
-    for (const name in Game.creeps) {
-        const creep = Game.creeps[name];
-
-        try {
-            routines[`${creep.memory.role}Routine`](creep);
-        } catch (error) {
-            console.log('Error while executing routine.');
-            console.log(error.stack);
-        }
-    }
-}
-
 function getSource(creep, sourceIndex) {
     const sources = creep.room.find(FIND_SOURCES);
     return sources[sourceIndex || 0];
@@ -74,4 +49,4 @@ function store(creep) {
     }
 }
 
-module.exports = { runRoles, harvest, store };
+module.exports = { harvest, store };

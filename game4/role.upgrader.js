@@ -1,4 +1,4 @@
-const { harvest } = require('util');
+const { harvest } = require('roleUtil');
 
 var roleUpgrader = {
     /** @param {Creep} creep **/

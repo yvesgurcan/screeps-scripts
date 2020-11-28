@@ -1,5 +1,5 @@
 const upgraderRoutine = require('role.upgrader');
-const { harvest } = require('roles');
+const { harvest } = require('roleUtil');
 
 function roleBuilder(creep) {
     const roomName = creep.room.name;

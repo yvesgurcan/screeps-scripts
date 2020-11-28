@@ -64,6 +64,5 @@ module.exports = {
     getTime,
     getBodyCost,
     printBodyCostForRoles,
-    cleanUpCreepMemory,
-    harvest
+    cleanUpCreepMemory
 };
