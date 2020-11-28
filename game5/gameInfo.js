@@ -87,10 +87,7 @@ function gameInfo(reportAll = false) {
                     console.log(
                         `${capitalize(role.name)}s in room ${roomName}: ${
                             Memory.rooms[roomName].roles[`${role.name}s`]
-                        } (max: ${
-                            Memory.rooms[roomName].roles[`${role.name}s`] >=
-                            role.max
-                        })`
+                        }/${role.max}`
                     );
                 }
             }
