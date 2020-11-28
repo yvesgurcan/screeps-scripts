@@ -92,7 +92,7 @@ function spawn(creepRole, customCreepActions) {
                 spawnerName
             ].room.visual.text(
                 `🛠️${spawningCreep.memory.role}`,
-                Game.spawns[spawnerName].pos.x - 1,
+                Game.spawns[spawnerName].pos.x - 1.5,
                 Game.spawns[spawnerName].pos.y + 1,
                 { align: 'left', opacity: 0.8 }
             );
