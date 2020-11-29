@@ -24,7 +24,7 @@ function builderRoutine(creep) {
     if (creep.memory.building) {
         build(creep);
     } else {
-        withdraw(creep, ROLES.builder.color);
+        withdraw(creep, ROLES.builder.color, false);
     }
 }
 
