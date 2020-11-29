@@ -7,7 +7,7 @@ function maintainerRoutine(creep) {
     const roomName = creep.room.name;
 
     if (creep.store.getFreeCapacity() > 0) {
-        withdraw(creep, ROLES.maintainer.color, false);
+        withdraw(creep, ROLES.maintainer.color);
     } else {
         const targets = creep.room.find(FIND_STRUCTURES, {
             filter: structure => {

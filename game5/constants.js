@@ -1,7 +1,7 @@
-const MAX_HARVESTERS = 8;
+const MAX_HARVESTERS = 10;
 const MAX_MAINTAINERS = 1;
 const MAX_REPAIRERS = 3;
-const MAX_UPGRADERS = 4;
+const MAX_UPGRADERS = 3;
 const MAX_BUILDERS = 4;
 const MAX_BUILDERS_GRANDS_TRAVAUX = MAX_BUILDERS + 2;
 const MAX_CLAIMERS = 1;
@@ -32,9 +32,9 @@ const ROLES = {
         types: [
             {
                 name: WOODHOUSE,
-                ratio: 0.5
+                ratio: 0.4
             },
-            { name: ALFRED, ratio: 0.5 }
+            { name: ALFRED, ratio: 0.6 }
         ],
         generation: 3,
         // Fast movement and fast work

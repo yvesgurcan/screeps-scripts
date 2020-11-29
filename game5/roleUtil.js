@@ -61,11 +61,7 @@ function harvest(creep, pathColor = 'yellow') {
     let sourceIndex = 1;
 
     try {
-        if (
-            creep.memory.type === 'Woodhouse' ||
-            creep.memory.role === 'upgrader' ||
-            creep.memory.role === 'repairer'
-        ) {
+        if (creep.memory.type === 'Woodhouse') {
             sourceIndex = 0;
         }
     } catch (error) {
@@ -130,7 +126,7 @@ function store(creep) {
     }
 }
 
-function withdraw(creep, pathColor = 'yellow', harvestAlternative = true) {
+function withdraw(creep, pathColor = 'yellow') {
     const container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
         filter: structure => {
             return (
@@ -147,8 +143,6 @@ function withdraw(creep, pathColor = 'yellow', harvestAlternative = true) {
         creep.moveTo(container, {
             visualizePathStyle: { stroke: pathColor }
         });
-    } else if (!container && harvestAlternative) {
-        harvest(creep, pathColor);
     }
 }
 
