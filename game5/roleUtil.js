@@ -33,6 +33,20 @@ function getSource(creep, sourceIndex = 0) {
     return sources[sourceIndex];
 }
 
+function sortByPath(creep, targets) {
+    let targetsPathLength = [];
+    for (let i = 0; i < targets.length; i++) {
+        const target = targets[i];
+        targetsPathLength.push({
+            target,
+            pathLength: target.pos.findPathTo(creep).length
+        });
+    }
+
+    targetsPathLength.sort((a, b) => a.pathLength - b.pathLength);
+    return targetsPathLength.map(t => t.target);
+}
+
 function harvest(creep, pathColor = 'yellow') {
     // TODO: Distribute sources more intelligently
     let sourceIndex = 1;
@@ -90,11 +104,16 @@ function store(creep) {
         });
     }
 
-    if (targets.length > 0) {
+    const closestTargets = sortByPath(creep, targets);
+
+    if (closestTargets.length > 0) {
         // creep.say('🔋store');
         creep.memory.storing = true;
-        if (creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(targets[0], {
+        if (
+            creep.transfer(closestTargets[0], RESOURCE_ENERGY) ===
+            ERR_NOT_IN_RANGE
+        ) {
+            creep.moveTo(closestTargets[0], {
                 visualizePathStyle: { stroke: 'white' }
             });
         }
