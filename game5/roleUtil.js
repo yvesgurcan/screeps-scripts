@@ -1,3 +1,6 @@
+const { cpuExceedsLimit } = require('util');
+const { ROLES } = require('constants');
+
 function isEmpty(creep) {
     return creep.store[RESOURCE_ENERGY] === 0;
 }
@@ -35,16 +38,22 @@ function getSource(creep, sourceIndex = 0) {
 
 function sortByPath(creep, targets) {
     let targetsPathLength = [];
+
+    if (cpuExceedsLimit()) {
+        return targets.map(target => Game.getObjectById(target.id));
+    }
+
     for (let i = 0; i < targets.length; i++) {
         const target = targets[i];
         targetsPathLength.push({
             target,
-            pathLength: target.pos.findPathTo(creep).length
+            // Sucks CPU
+            pathLength: creep.pos.findPathTo(targets[i]).length
         });
     }
 
     targetsPathLength.sort((a, b) => a.pathLength - b.pathLength);
-    return targetsPathLength.map(t => t.target);
+    return targetsPathLength.map(t => Game.getObjectById(t.target.id));
 }
 
 function harvest(creep, pathColor = 'yellow') {
@@ -120,4 +129,17 @@ function store(creep) {
     }
 }
 
-module.exports = { isEmpty, isFull, harvest, store };
+function build(creep) {
+    const targets = Memory.rooms[creep.room.name].sites;
+
+    if (targets.length) {
+        const closestTargets = sortByPath(creep, targets);
+        if (creep.build(closestTargets[0]) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(closestTargets[0], {
+                visualizePathStyle: { stroke: ROLES.builder.color }
+            });
+        }
+    }
+}
+
+module.exports = { isEmpty, isFull, harvest, store, build, sortByPath };

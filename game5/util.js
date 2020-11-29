@@ -63,6 +63,19 @@ function cleanUpCreepMemory() {
     }
 }
 
+function cpuUsage(info) {
+    console.log(
+        `CPU usage ${info ? `at ${info}` : ''}: ${Math.floor(
+            Game.cpu.getUsed()
+        )}/${Game.cpu.limit}.`
+    );
+}
+
+function cpuExceedsLimit() {
+    const exceeds = Game.cpu.getUsed() > Game.cpu.limit;
+    return exceeds;
+}
+
 module.exports = {
     getCreepsFromRole,
     pickNumberInRange,
@@ -71,5 +84,7 @@ module.exports = {
     getTime,
     getBodyCost,
     printBodyCostForRoles,
-    cleanUpCreepMemory
+    cleanUpCreepMemory,
+    cpuUsage,
+    cpuExceedsLimit
 };

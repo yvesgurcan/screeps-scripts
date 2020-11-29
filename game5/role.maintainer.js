@@ -29,7 +29,7 @@ function maintainerRoutine(creep) {
             // Switch task if no tower needs energy
         } else {
             // Construction sites exist
-            if (Memory.rooms[roomName].sites > 0) {
+            if (Memory.rooms[roomName].sites.length > 0) {
                 builderRoutine(creep);
                 return;
             }

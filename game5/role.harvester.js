@@ -12,7 +12,7 @@ function harvesterRoutine(creep) {
         Memory.rooms[roomName].creepsQueueEmpty
     ) {
         // Construction sites exist
-        if (Memory.rooms[roomName].sites > 0) {
+        if (Memory.rooms[roomName].sites.length > 0) {
             builderRoutine(creep);
             return;
         }

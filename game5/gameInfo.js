@@ -51,13 +51,49 @@ function gameInfo(reportAll = false) {
                 Memory.rooms[roomName].energyCapacity = energyCapacity;
             }
 
-            const sites = Game.rooms[roomName].find(FIND_CONSTRUCTION_SITES)
-                .length;
-            if (reportAll || Memory.rooms[roomName].sites !== sites) {
+            const availableEnergyStores = Game.rooms[roomName].find(
+                FIND_STRUCTURES,
+                {
+                    filter: structure => {
+                        return (
+                            (structure.structureType === STRUCTURE_EXTENSION ||
+                                structure.structureType === STRUCTURE_SPAWN) &&
+                            structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+                        );
+                    }
+                }
+            );
+
+            if (!Memory.rooms[roomName].availableEnergyStores) {
+                Memory.rooms[roomName].availableEnergyStores = [];
+            }
+
+            if (
+                reportAll ||
+                Memory.rooms[roomName].availableEnergyStores.length !==
+                    availableEnergyStores.length
+            ) {
+                Memory.rooms[
+                    roomName
+                ].availableEnergyStores = availableEnergyStores;
+                console.log(
+                    `Available energy stores in room ${roomName}: ${Memory.rooms[roomName].availableEnergyStores.length}`
+                );
+            }
+
+            if (!Memory.rooms[roomName].sites) {
+                Memory.rooms[roomName].sites = [];
+            }
+
+            const sites = Game.rooms[roomName].find(FIND_CONSTRUCTION_SITES);
+            if (
+                reportAll ||
+                Memory.rooms[roomName].sites.length !== sites.length
+            ) {
                 Memory.rooms[roomName].sites = sites;
                 console.log(
                     `Construction sites in room ${roomName}: ${
-                        Memory.rooms[roomName].sites
+                        Memory.rooms[roomName].sites.length
                     } (grand travaux: ${sites > GRANDS_TRAVAUX})`
                 );
             }

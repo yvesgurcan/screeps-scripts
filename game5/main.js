@@ -4,7 +4,7 @@ const queueConstruction = require('queueConstruction');
 const runRoles = require('runRoles');
 const { defend } = require('defend');
 const addUtilFunctions = require('addUtilFunctions');
-const { cleanUpCreepMemory } = require('util');
+const { cleanUpCreepMemory, cpuUsage } = require('util');
 
 console.log('Script updated.');
 
@@ -16,4 +16,5 @@ module.exports.loop = function () {
     defend();
     cleanUpCreepMemory();
     queueConstruction();
+    cpuUsage('loop end');
 };
