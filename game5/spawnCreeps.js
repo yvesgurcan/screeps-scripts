@@ -7,7 +7,8 @@ const {
 const {
     GRANDS_TRAVAUX,
     MAX_BUILDER_GRANDS_TRAVAUX,
-    ROLES
+    ROLES,
+    RICK
 } = require('constants');
 
 function spawnCreeps() {
@@ -21,9 +22,23 @@ function spawnCreeps() {
 
                 // Gather roles that have a deficit in their number of creeps
                 if (creeps.length < role.max) {
+                    // Figure out type
+                    let spawnType = ROLES[roleName].types[0].name;
+                    for (let i = 0; i < ROLES[roleName].types.length; i++) {
+                        const type = ROLES[roleName].types[i];
+                        const creepOfType = creeps.filter(
+                            creep => creep.memory.type === type.name
+                        ).length;
+                        if (creepOfType < role.max * type.ratio) {
+                            spawnType = type.name;
+                            break;
+                        }
+                    }
+
                     nextSpawnCandidates.push({
                         name: role.name,
-                        diff: creeps.length - role.max
+                        diff: creeps.length - role.max,
+                        type: spawnType
                     });
                 }
             }
@@ -31,13 +46,19 @@ function spawnCreeps() {
             if (nextSpawnCandidates.length > 0) {
                 Memory.rooms[roomName].creepsQueueEmpty = false;
                 if (nextSpawnCandidates.length === 1) {
-                    spawn(nextSpawnCandidates[0].name).from('Spawn1');
+                    spawn(
+                        nextSpawnCandidates[0].name,
+                        nextSpawnCandidates[0].type
+                    ).from('Spawn1');
                     return;
                 }
 
                 // Pick role with the most dire deficit of creeps
                 nextSpawnCandidates.sort((a, b) => a.diff - b.diff);
-                spawn(nextSpawnCandidates[0].name).from('Spawn1');
+                spawn(
+                    nextSpawnCandidates[0].name,
+                    nextSpawnCandidates[0].type
+                ).from('Spawn1');
                 return;
             }
 
@@ -51,7 +72,7 @@ function spawnCreeps() {
                 builders.length < MAX_BUILDER_GRANDS_TRAVAUX
             ) {
                 Memory.rooms[roomName].creepsQueueEmpty = false;
-                spawn('builder').from('Spawn1');
+                spawn('builder', RICK).from('Spawn1');
                 return;
             }
 
@@ -66,17 +87,17 @@ function spawnCreeps() {
     }
 }
 
-function spawn(creepRole, customCreepActions) {
+function spawn(creepRole, creepType) {
     function from(spawnerName) {
-        const creepActions = customCreepActions || ROLES[creepRole].bodyParts;
+        const creepActions = ROLES[creepRole].bodyParts;
 
-        const { name, stamp, type, generation } = getName(creepRole);
+        const { name, stamp, generation } = getName(creepRole, creepType);
 
         Game.spawns[spawnerName].spawnCreep(creepActions, name, {
             memory: {
                 role: creepRole,
+                type: creepType,
                 stamp,
-                type,
                 generation
             }
         });
@@ -101,21 +122,24 @@ function spawn(creepRole, customCreepActions) {
     };
 }
 
-function getName(creepRole) {
+function getName(creepRole, creepType) {
     const {
         format: { shortLivedStamp }
     } = getTime();
 
-    const { types, generation } = ROLES[creepRole];
+    const { generation } = ROLES[creepRole];
 
-    const type = types ? types[0] : '';
-    const creepType = type || capitalize(creepRole);
-    const creepRoleShort = types ? capitalizedCharacters(creepRole) : 'G';
+    const creepRoleShort = capitalizedCharacters(creepRole, 2);
     const creepGeneration = generation || '';
 
     const creepName = `${creepType}-${creepRoleShort}${creepGeneration}-${shortLivedStamp}`;
 
-    return { name: creepName, stamp: shortLivedStamp, type, generation };
+    return {
+        name: creepName,
+        stamp: shortLivedStamp,
+        type: creepType,
+        generation
+    };
 }
 
 module.exports = spawnCreeps;

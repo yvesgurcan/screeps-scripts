@@ -90,10 +90,10 @@ function gameInfo(reportAll = false) {
 
                         const type = role.types[i];
                         Memory.rooms[roomName].types[type.name] = creeps.filter(
-                            creep => creep.type === type.name
+                            creep => creep.memory.type === type.name
                         ).length;
                         console.log(
-                            `${type.name} in room ${roomName}: ${
+                            `- ${type.name} in room ${roomName}: ${
                                 Memory.rooms[roomName].types[type.name]
                             }/${type.ratio * role.max}`
                         );

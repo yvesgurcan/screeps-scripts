@@ -30,8 +30,11 @@ const ROLES = {
     harvester: {
         name: 'harvester',
         types: [
-            { name: WOODHOUSE, ratio: 0.8 },
-            { name: ALFRED, ratio: 0.2 }
+            {
+                name: WOODHOUSE,
+                ratio: (((1 / MAX_HARVESTERS) * MAX_HARVESTERS) / 4) * 3
+            },
+            { name: ALFRED, ratio: ((1 / MAX_HARVESTERS) * MAX_HARVESTERS) / 4 }
         ],
         generation: 3,
         // Fast movement and fast work
@@ -41,7 +44,9 @@ const ROLES = {
     },
     maintainer: {
         name: 'maintainer',
-        types: [{ name: AMMON, ratio: 1 }],
+        types: [
+            { name: AMMON, ratio: (1 / MAX_MAINTAINERS) * MAX_MAINTAINERS }
+        ],
         generation: 3,
         // Super fast movement and good capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
@@ -50,7 +55,7 @@ const ROLES = {
     },
     repairer: {
         name: 'repairer',
-        types: [{ name: BETH, ratio: 1 }],
+        types: [{ name: BETH, ratio: (1 / MAX_REPAIRERS) * MAX_REPAIRERS }],
         generation: 1,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
@@ -59,7 +64,7 @@ const ROLES = {
     },
     upgrader: {
         name: 'upgrader',
-        types: [{ name: KRIEGER, ratio: 1 }],
+        types: [{ name: KRIEGER, ratio: (1 / MAX_UPGRADERS) * MAX_UPGRADERS }],
         generation: 3,
         // Great capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
@@ -68,7 +73,7 @@ const ROLES = {
     },
     builder: {
         name: 'builder',
-        types: [{ name: RICK, ratio: 1 }],
+        types: [{ name: RICK, ratio: (1 / MAX_BUILDER) * MAX_BUILDER }],
         generation: 3,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
@@ -77,7 +82,7 @@ const ROLES = {
     },
     claimer: {
         name: 'claimer',
-        types: [{ name: DUNCAN, ratio: 1 }],
+        types: [{ name: DUNCAN, ratio: (1 / MAX_CLAIMERS) * MAX_CLAIMERS }],
         generation: 1,
         // Super fast movement
         bodyParts: [CLAIM, MOVE, MOVE, MOVE, MOVE, MOVE],

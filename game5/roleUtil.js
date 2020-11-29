@@ -59,15 +59,37 @@ function harvest(creep, pathColor = 'yellow') {
 }
 
 function store(creep) {
-    const targets = creep.room.find(FIND_STRUCTURES, {
+    let structureFilter = structure =>
+        structure.structureType === STRUCTURE_EXTENSION ||
+        structure.structureType === STRUCTURE_SPAWN;
+
+    if (creep.memory.type === 'Alfred') {
+        structureFilter = structure =>
+            structure.structureType === STRUCTURE_CONTAINER;
+    }
+
+    let targets = creep.room.find(FIND_STRUCTURES, {
         filter: structure => {
             return (
-                (structure.structureType === STRUCTURE_EXTENSION ||
-                    structure.structureType === STRUCTURE_SPAWN) &&
+                structureFilter(structure) &&
                 structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
             );
         }
     });
+
+    // Containers are full
+    if (creep.memory.type === 'Alfred' && targets.length === 0) {
+        targets = creep.room.find(FIND_STRUCTURES, {
+            filter: structure => {
+                return (
+                    (structure.structureType === STRUCTURE_EXTENSION ||
+                        structure.structureType === STRUCTURE_SPAWN) &&
+                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+                );
+            }
+        });
+    }
+
     if (targets.length > 0) {
         // creep.say('🔋store');
         creep.memory.storing = true;
