@@ -55,6 +55,8 @@ function spawnCreeps() {
             }
 
             if (nextSpawnCandidates.length > 0) {
+                // Pick role with the most dire deficit of creeps
+                nextSpawnCandidates.sort((a, b) => a.diff - b.diff);
                 console.log(
                     `Spawn candidates: ${JSON.stringify(nextSpawnCandidates)}`
                 );
@@ -68,8 +70,6 @@ function spawnCreeps() {
                     return;
                 }
 
-                // Pick role with the most dire deficit of creeps
-                nextSpawnCandidates.sort((a, b) => a.diff - b.diff);
                 spawn(
                     nextSpawnCandidates[0].name,
                     nextSpawnCandidates[0].type

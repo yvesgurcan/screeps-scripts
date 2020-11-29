@@ -1,7 +1,7 @@
-const MAX_HARVESTERS = 7;
-const MAX_MAINTAINERS = 2;
+const MAX_HARVESTERS = 8;
+const MAX_MAINTAINERS = 1;
 const MAX_REPAIRERS = 3;
-const MAX_UPGRADERS = 3;
+const MAX_UPGRADERS = 4;
 const MAX_BUILDERS = 4;
 const MAX_BUILDERS_GRANDS_TRAVAUX = MAX_BUILDERS + 2;
 const MAX_CLAIMERS = 1;
@@ -32,9 +32,9 @@ const ROLES = {
         types: [
             {
                 name: WOODHOUSE,
-                ratio: (1 / MAX_HARVESTERS) * 5
+                ratio: 0.5
             },
-            { name: ALFRED, ratio: (1 / MAX_HARVESTERS) * 2 }
+            { name: ALFRED, ratio: 0.5 }
         ],
         generation: 3,
         // Fast movement and fast work
@@ -44,9 +44,7 @@ const ROLES = {
     },
     maintainer: {
         name: 'maintainer',
-        types: [
-            { name: AMMON, ratio: (1 / MAX_MAINTAINERS) * MAX_MAINTAINERS }
-        ],
+        types: [{ name: AMMON, ratio: 1 }],
         generation: 3,
         // Super fast movement and good capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
@@ -55,7 +53,7 @@ const ROLES = {
     },
     repairer: {
         name: 'repairer',
-        types: [{ name: BETH, ratio: (1 / MAX_REPAIRERS) * MAX_REPAIRERS }],
+        types: [{ name: BETH, ratio: 1 }],
         generation: 1,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
@@ -64,7 +62,7 @@ const ROLES = {
     },
     upgrader: {
         name: 'upgrader',
-        types: [{ name: KRIEGER, ratio: (1 / MAX_UPGRADERS) * MAX_UPGRADERS }],
+        types: [{ name: KRIEGER, ratio: 1 }],
         generation: 3,
         // Great capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
@@ -73,7 +71,7 @@ const ROLES = {
     },
     builder: {
         name: 'builder',
-        types: [{ name: RICK, ratio: (1 / MAX_BUILDERS) * MAX_BUILDERS }],
+        types: [{ name: RICK, ratio: 1 }],
         generation: 3,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
@@ -83,7 +81,7 @@ const ROLES = {
     // Claimer is too expensive to get built: Other creeps die before room can gather enough energy to afford Duncan
     claimer: {
         name: 'claimer',
-        types: [{ name: DUNCAN, ratio: (1 / MAX_CLAIMERS) * MAX_CLAIMERS }],
+        types: [{ name: DUNCAN, ratio: 1 }],
         generation: 1,
         // Super fast movement
         bodyParts: [CLAIM, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, WORK],
