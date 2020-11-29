@@ -14,22 +14,6 @@ function getSource(creep, sourceIndex = 0) {
     const source = sources[sourceIndex];
 
     if (source.energy === 0) {
-        if (
-            sourceIndex === 0 &&
-            source.ticksToRegeneration > 50 &&
-            sources[1].energy > 0
-        ) {
-            return sources[1];
-        }
-
-        if (
-            sourceIndex === 1 &&
-            source.ticksToRegeneration > 50 &&
-            sources[0].energy > 0
-        ) {
-            return sources[0];
-        }
-
         return null;
     }
 
