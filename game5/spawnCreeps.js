@@ -1,12 +1,12 @@
 const {
-    capitalize,
     capitalizedCharacters,
     getTime,
-    getCreepsFromRole
+    getCreepsFromRole,
+    getBodyCost
 } = require('util');
 const {
     GRANDS_TRAVAUX,
-    MAX_BUILDER_GRANDS_TRAVAUX,
+    MAX_BUILDERS_GRANDS_TRAVAUX,
     ROLES,
     RICK
 } = require('constants');
@@ -15,9 +15,20 @@ function spawnCreeps() {
     try {
         for (const roomName in Game.rooms) {
             let nextSpawnCandidates = [];
+            let roleCount = 0;
+            let cantAfford = false;
 
             for (const roleName in ROLES) {
+                roleCount++;
                 const role = ROLES[roleName];
+
+                if (
+                    getBodyCost(role.bodyParts) > Memory.rooms[roomName].energy
+                ) {
+                    cantAfford++;
+                    continue;
+                }
+
                 const creeps = getCreepsFromRole(role.name);
 
                 // Gather roles that have a deficit in their number of creeps
@@ -29,7 +40,7 @@ function spawnCreeps() {
                         const creepOfType = creeps.filter(
                             creep => creep.memory.type === type.name
                         ).length;
-                        if (creepOfType < role.max * type.ratio) {
+                        if (creepOfType < Math.ceil(role.max * type.ratio)) {
                             spawnType = type.name;
                             break;
                         }
@@ -44,6 +55,10 @@ function spawnCreeps() {
             }
 
             if (nextSpawnCandidates.length > 0) {
+                console.log(
+                    `Spawn candidates: ${JSON.stringify(nextSpawnCandidates)}`
+                );
+
                 Memory.rooms[roomName].creepsQueueEmpty = false;
                 if (nextSpawnCandidates.length === 1) {
                     spawn(
@@ -62,14 +77,18 @@ function spawnCreeps() {
                 return;
             }
 
+            if (cantAfford === roleCount) {
+                return;
+            }
+
             const constructionSites = Game.rooms[roomName].find(
-                FIND_CONSTRUCTION_SITES
+                FIND_MY_CONSTRUCTION_SITES
             ).length;
 
             const builders = getCreepsFromRole('builder');
             if (
-                constructionSites > GRANDS_TRAVAUX &&
-                builders.length < MAX_BUILDER_GRANDS_TRAVAUX
+                constructionSites >= GRANDS_TRAVAUX &&
+                builders.length < MAX_BUILDERS_GRANDS_TRAVAUX
             ) {
                 Memory.rooms[roomName].creepsQueueEmpty = false;
                 spawn('builder', RICK).from('Spawn1');

@@ -1,16 +1,23 @@
 const { HP } = require('constants');
 
 const SAFE_MODE_RESULTS_MAP = {
-    OK: 'Success',
-    ERR_NOT_OWNER: 'You are not the owner of this controller',
-    ERR_BUSY: 'There is another room in safe mode already',
-    ERR_NOT_ENOUGH_RESOURCES: 'There is no safe mode activations available',
-    ERR_TIRED: 'Safe mode is still cooling down.'
+    [OK]: 'Success',
+    [ERR_NOT_OWNER]: 'You are not the owner of this controller',
+    [ERR_BUSY]: 'There is another room in safe mode already',
+    [ERR_NOT_ENOUGH_RESOURCES]: 'There is no safe mode activations available',
+    [ERR_TIRED]: 'Safe mode is still cooling down.'
 };
 
 function activateSafeMode(roomName) {
     const resultSafeMode = Game.rooms[roomName].controller.activateSafeMode();
-    const message = `Safe mode activation attempt in room ${roomName}: ${SAFE_MODE_RESULTS_MAP[resultSafeMode]}.`;
+    const mappedResultSafeMode = SAFE_MODE_RESULTS_MAP[resultSafeMode];
+
+    if (Memory.safeModeResult === mappedResultSafeMode) {
+        return;
+    }
+
+    const message = `Safe mode activation attempt in room ${roomName}: ${mappedResultSafeMode}.`;
+
     Game.notify(message, 0);
     console.log(message);
 }
@@ -33,6 +40,10 @@ function defend() {
 
                 towers.forEach(tower => tower.attack(hostiles[0]));
             } else {
+                if (Memory.safeModeResult) {
+                    delete Memory.safeModeResult;
+                }
+
                 towers.forEach(tower => {
                     const closestDamagedStructure = tower.pos.findClosestByRange(
                         FIND_STRUCTURES,

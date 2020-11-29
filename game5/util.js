@@ -63,16 +63,28 @@ function cleanUpCreepMemory() {
     }
 }
 
-function cpuUsage(info) {
+function cpuUsage(info, record = false) {
+    const usage = Math.floor(Game.cpu.getUsed());
+
+    if (record) {
+        if (Memory.cpuUsage === usage) {
+            return;
+        }
+        Memory.cpuUsage = usage;
+    }
+
     console.log(
-        `CPU usage ${info ? `at ${info}` : ''}: ${Math.floor(
-            Game.cpu.getUsed()
-        )}/${Game.cpu.limit}.`
+        `CPU usage${info ? ` at ${info}` : ''}: ${usage}/${Game.cpu.limit}.`
     );
 }
 
 function cpuExceedsLimit() {
     const exceeds = Game.cpu.getUsed() > Game.cpu.limit;
+
+    if (exceeds) {
+        console.log(`CPU usage limit reached.`);
+    }
+
     return exceeds;
 }
 

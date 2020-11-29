@@ -18,7 +18,9 @@ function addUtilFunctions() {
 
     if (!global.removeConstructions) {
         global.removeConstructions = () => {
-            const sites = Game.rooms[MAIN_ROOM].find(FIND_CONSTRUCTION_SITES);
+            const sites = Game.rooms[MAIN_ROOM].find(
+                FIND_MY_CONSTRUCTION_SITES
+            );
             for (const site of sites) {
                 site.remove();
             }

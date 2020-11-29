@@ -16,5 +16,5 @@ module.exports.loop = function () {
     defend();
     cleanUpCreepMemory();
     queueConstruction();
-    cpuUsage('loop end');
+    cpuUsage(null, true);
 };

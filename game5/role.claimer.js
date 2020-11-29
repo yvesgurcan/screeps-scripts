@@ -1,5 +1,4 @@
-const { upgraderRoutine } = require('role.upgrader');
-const { ROLES } = require('constants');
+const upgraderRoutine = require('role.upgrader');
 
 // Same as upgraders for now
 function claimerRoutine(creep) {

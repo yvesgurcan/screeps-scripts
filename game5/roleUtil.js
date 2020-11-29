@@ -130,12 +130,10 @@ function store(creep) {
 }
 
 function build(creep) {
-    const targets = Memory.rooms[creep.room.name].sites;
-
-    if (targets.length) {
-        const closestTargets = sortByPath(creep, targets);
-        if (creep.build(closestTargets[0]) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(closestTargets[0], {
+    const target = creep.pos.findClosestByPath(FIND_MY_CONSTRUCTION_SITES);
+    if (target) {
+        if (creep.build(target) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(target, {
                 visualizePathStyle: { stroke: ROLES.builder.color }
             });
         }

@@ -1,9 +1,9 @@
-const MAX_HARVESTERS = 8;
+const MAX_HARVESTERS = 7;
 const MAX_MAINTAINERS = 2;
 const MAX_REPAIRERS = 3;
 const MAX_UPGRADERS = 3;
-const MAX_BUILDER = 4;
-const MAX_BUILDER_GRANDS_TRAVAUX = MAX_BUILDER + 2;
+const MAX_BUILDERS = 4;
+const MAX_BUILDERS_GRANDS_TRAVAUX = MAX_BUILDERS + 2;
 const MAX_CLAIMERS = 1;
 
 const CONSTRUCTION_QUEUE = [];
@@ -32,9 +32,9 @@ const ROLES = {
         types: [
             {
                 name: WOODHOUSE,
-                ratio: (((1 / MAX_HARVESTERS) * MAX_HARVESTERS) / 4) * 3
+                ratio: (1 / MAX_HARVESTERS) * 5
             },
-            { name: ALFRED, ratio: ((1 / MAX_HARVESTERS) * MAX_HARVESTERS) / 4 }
+            { name: ALFRED, ratio: (1 / MAX_HARVESTERS) * 2 }
         ],
         generation: 3,
         // Fast movement and fast work
@@ -73,19 +73,20 @@ const ROLES = {
     },
     builder: {
         name: 'builder',
-        types: [{ name: RICK, ratio: (1 / MAX_BUILDER) * MAX_BUILDER }],
+        types: [{ name: RICK, ratio: (1 / MAX_BUILDERS) * MAX_BUILDERS }],
         generation: 3,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
-        max: MAX_BUILDER,
+        max: MAX_BUILDERS,
         color: 'green'
     },
+    // Claimer is too expensive to get built: Other creeps die before room can gather enough energy to afford Duncan
     claimer: {
         name: 'claimer',
         types: [{ name: DUNCAN, ratio: (1 / MAX_CLAIMERS) * MAX_CLAIMERS }],
         generation: 1,
         // Super fast movement
-        bodyParts: [CLAIM, MOVE, MOVE, MOVE, MOVE, MOVE],
+        bodyParts: [CLAIM, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, WORK],
         max: MAX_CLAIMERS,
         color: 'orange'
     }
@@ -101,8 +102,8 @@ const HP = {
 module.exports = {
     MAIN_ROOM,
     GRANDS_TRAVAUX,
-    MAX_BUILDER,
-    MAX_BUILDER_GRANDS_TRAVAUX,
+    MAX_BUILDERS,
+    MAX_BUILDERS_GRANDS_TRAVAUX,
     MAX_UPGRADERS,
     MAX_HARVESTERS,
     MAX_MAINTAINERS,

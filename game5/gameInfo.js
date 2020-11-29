@@ -4,13 +4,13 @@ const {
     printBodyCostForRoles
 } = require('util');
 const constants = require('constants');
-const { ROLES, ...constantsWithoutRoles } = constants;
-const { GRANDS_TRAVAUX } = constants;
+const { ROLES, HP, ...selectedConstants } = constants;
+const { GRANDS_TRAVAUX, MAX_BUILDERS_GRANDS_TRAVAUX } = constants;
 
 function gameInfo(reportAll = false) {
     try {
         if (reportAll) {
-            console.log(`Constants: ${JSON.stringify(constantsWithoutRoles)}`);
+            console.log(`Constants: ${JSON.stringify(selectedConstants)}`);
             printBodyCostForRoles();
         }
 
@@ -85,7 +85,7 @@ function gameInfo(reportAll = false) {
                 Memory.rooms[roomName].sites = [];
             }
 
-            const sites = Game.rooms[roomName].find(FIND_CONSTRUCTION_SITES);
+            const sites = Game.rooms[roomName].find(FIND_MY_CONSTRUCTION_SITES);
             if (
                 reportAll ||
                 Memory.rooms[roomName].sites.length !== sites.length
@@ -94,7 +94,7 @@ function gameInfo(reportAll = false) {
                 console.log(
                     `Construction sites in room ${roomName}: ${
                         Memory.rooms[roomName].sites.length
-                    } (grand travaux: ${sites > GRANDS_TRAVAUX})`
+                    } (grands travaux: ${sites.length >= GRANDS_TRAVAUX})`
                 );
             }
 
@@ -113,10 +113,16 @@ function gameInfo(reportAll = false) {
                 ) {
                     Memory.rooms[roomName].roles[`${role.name}s`] =
                         creeps.length;
+                    const max =
+                        role.name === 'builder' &&
+                        Memory.rooms[roomName].sites.length >= GRANDS_TRAVAUX
+                            ? MAX_BUILDERS_GRANDS_TRAVAUX
+                            : role.max;
+
                     console.log(
                         `${capitalize(role.name)}s in room ${roomName}: ${
                             Memory.rooms[roomName].roles[`${role.name}s`]
-                        }/${role.max}`
+                        }/${max}`
                     );
 
                     for (let i = 0; i < role.types.length; i++) {
@@ -131,7 +137,7 @@ function gameInfo(reportAll = false) {
                         console.log(
                             `- ${type.name} in room ${roomName}: ${
                                 Memory.rooms[roomName].types[type.name]
-                            }/${type.ratio * role.max}`
+                            }/${Math.ceil(type.ratio * role.max)}`
                         );
                     }
                 }
