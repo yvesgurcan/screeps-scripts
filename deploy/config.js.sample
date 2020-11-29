@@ -1,0 +1,7 @@
+
+{
+  userName: "user",
+  password: "pass",
+  path: "/Users/screepsplayer/projects/screeps",
+  branch: "default"
+}
