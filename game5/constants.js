@@ -13,6 +13,7 @@ const GRANDS_TRAVAUX = 10;
 const MAIN_ROOM = 'E35N2';
 
 const WOODHOUSE = 'Woodhouse';
+const ALFRED = 'Alfred';
 
 const AMMON = 'Ammon';
 
@@ -28,7 +29,10 @@ const DUNCAN = 'Duncan';
 const ROLES = {
     harvester: {
         name: 'harvester',
-        types: [WOODHOUSE],
+        types: [
+            { name: WOODHOUSE, ratio: 0.8 },
+            { name: ALFRED, ratio: 0.2 }
+        ],
         generation: 3,
         // Fast movement and fast work
         bodyParts: [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
@@ -37,7 +41,7 @@ const ROLES = {
     },
     maintainer: {
         name: 'maintainer',
-        types: [AMMON],
+        types: [{ name: AMMON, ratio: 1 }],
         generation: 3,
         // Super fast movement and good capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
@@ -46,7 +50,7 @@ const ROLES = {
     },
     repairer: {
         name: 'repairer',
-        types: [BETH],
+        types: [{ name: BETH, ratio: 1 }],
         generation: 1,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
@@ -55,7 +59,7 @@ const ROLES = {
     },
     upgrader: {
         name: 'upgrader',
-        types: [KRIEGER],
+        types: [{ name: KRIEGER, ratio: 1 }],
         generation: 3,
         // Great capacity
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
@@ -64,7 +68,7 @@ const ROLES = {
     },
     builder: {
         name: 'builder',
-        types: [RICK],
+        types: [{ name: RICK, ratio: 1 }],
         generation: 3,
         // Great capacity and fast movement
         bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
@@ -73,7 +77,7 @@ const ROLES = {
     },
     claimer: {
         name: 'claimer',
-        types: [DUNCAN],
+        types: [{ name: DUNCAN, ratio: 1 }],
         generation: 1,
         // Super fast movement
         bodyParts: [CLAIM, MOVE, MOVE, MOVE, MOVE, MOVE],

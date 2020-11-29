@@ -82,6 +82,22 @@ function gameInfo(reportAll = false) {
                             Memory.rooms[roomName].roles[`${role.name}s`]
                         }/${role.max}`
                     );
+
+                    for (let i = 0; i < role.types.length; i++) {
+                        if (!Memory.rooms[roomName].types) {
+                            Memory.rooms[roomName].types = {};
+                        }
+
+                        const type = role.types[i];
+                        Memory.rooms[roomName].types[type.name] = creeps.filter(
+                            creep => creep.type === type.name
+                        ).length;
+                        console.log(
+                            `${type.name} in room ${roomName}: ${
+                                Memory.rooms[roomName].types[type.name]
+                            }/${type.ratio * role.max}`
+                        );
+                    }
                 }
             }
         }
