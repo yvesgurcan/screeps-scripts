@@ -1,10 +1,10 @@
-const MAX_HARVESTERS = 10;
+const MAX_HARVESTERS = 7;
 const MAX_MAINTAINERS = 1;
-const MAX_REPAIRERS = 3;
-const MAX_UPGRADERS = 3;
-const MAX_BUILDERS = 4;
+const MAX_REPAIRERS = 1;
+const MAX_UPGRADERS = 1;
+const MAX_BUILDERS = 3;
 const MAX_BUILDERS_GRANDS_TRAVAUX = MAX_BUILDERS + 2;
-const MAX_CLAIMERS = 1;
+const MAX_CLAIMERS = 0;
 
 const CONSTRUCTION_QUEUE = [];
 
@@ -32,9 +32,9 @@ const ROLES = {
         types: [
             {
                 name: WOODHOUSE,
-                ratio: 0.4
+                ratio: 0.5
             },
-            { name: ALFRED, ratio: 0.6 }
+            { name: ALFRED, ratio: 0.4 }
         ],
         generation: 3,
         // Fast movement and fast work
@@ -42,14 +42,14 @@ const ROLES = {
         max: MAX_HARVESTERS,
         color: 'yellow'
     },
-    maintainer: {
-        name: 'maintainer',
-        types: [{ name: AMMON, ratio: 1 }],
+    builder: {
+        name: 'builder',
+        types: [{ name: RICK, ratio: 1 }],
         generation: 3,
-        // Super fast movement and good capacity
-        bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
-        max: MAX_MAINTAINERS,
-        color: 'blue'
+        // Great capacity and fast movement
+        bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
+        max: MAX_BUILDERS,
+        color: 'green'
     },
     repairer: {
         name: 'repairer',
@@ -63,28 +63,27 @@ const ROLES = {
     upgrader: {
         name: 'upgrader',
         types: [{ name: KRIEGER, ratio: 1 }],
-        generation: 3,
+        generation: 4,
         // Great capacity
-        bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
+        bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
         max: MAX_UPGRADERS,
         color: 'purple'
     },
-    builder: {
-        name: 'builder',
-        types: [{ name: RICK, ratio: 1 }],
-        generation: 3,
-        // Great capacity and fast movement
-        bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
-        max: MAX_BUILDERS,
-        color: 'green'
+    maintainer: {
+        name: 'maintainer',
+        types: [{ name: AMMON, ratio: 1 }],
+        generation: 4,
+        bodyParts: [WORK, WORK, CARRY, MOVE, MOVE, MOVE],
+        max: MAX_MAINTAINERS,
+        color: 'blue'
     },
     // Claimer is too expensive to get built: Other creeps die before room can gather enough energy to afford Duncan
     claimer: {
         name: 'claimer',
         types: [{ name: DUNCAN, ratio: 1 }],
-        generation: 1,
+        generation: 2,
         // Super fast movement
-        bodyParts: [CLAIM, MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, WORK],
+        bodyParts: [CLAIM, MOVE, MOVE, MOVE, MOVE, CARRY, WORK],
         max: MAX_CLAIMERS,
         color: 'orange'
     }
@@ -107,5 +106,6 @@ module.exports = {
     MAX_MAINTAINERS,
     CONSTRUCTION_QUEUE,
     ROLES,
-    HP
+    HP,
+    RICK
 };

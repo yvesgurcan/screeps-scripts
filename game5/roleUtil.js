@@ -41,7 +41,6 @@ function sortByPath(creep, targets) {
 }
 
 function harvest(creep, pathColor = 'yellow') {
-    // TODO: Distribute sources more intelligently
     let sourceIndex = 1;
 
     try {

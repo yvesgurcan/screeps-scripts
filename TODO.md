@@ -1,0 +1,5 @@
+-   If energy source dies and harvester has resources in their store, store these resources in extensions/containers.
+-   If extensions are full, switch harvesters to store resources in containers.
+-   If containers are full, switch harvesters to store resources in extensions.
+-   Keep creeps moving towards containers even if containers are empty.
+-   Calculate distance between a source of energy and a container to estimate number, speed, capacity (50 per carry part), and work (2 per work part) of Alfred harvesters.
