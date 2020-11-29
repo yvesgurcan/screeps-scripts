@@ -1,6 +1,6 @@
 const builderRoutine = require('role.builder');
 const upgraderRoutine = require('role.upgrader');
-const { harvest, isEmpty, isFull } = require('roleUtil');
+const { withdraw, isEmpty, isFull } = require('roleUtil');
 const { ROLES, HP } = require('constants');
 
 function repairerRoutine(creep) {
@@ -8,7 +8,7 @@ function repairerRoutine(creep) {
 
     if (creep.memory.repairing && isEmpty(creep)) {
         creep.memory.repairing = false;
-        creep.say('🔄harvest');
+        creep.say('🔄withdraw');
     }
     if (!creep.memory.repairing && isFull(creep)) {
         creep.memory.repairing = true;
@@ -41,7 +41,7 @@ function repairerRoutine(creep) {
             return;
         }
     } else {
-        harvest(creep, ROLES.repairer.color);
+        withdraw(creep, ROLES.repairer.color);
     }
 }
 

@@ -1,13 +1,13 @@
 const builderRoutine = require('role.builder');
 const upgraderRoutine = require('role.upgrader');
-const { harvest } = require('roleUtil');
+const { withdraw } = require('roleUtil');
 const { ROLES } = require('constants');
 
 function maintainerRoutine(creep) {
     const roomName = creep.room.name;
 
     if (creep.store.getFreeCapacity() > 0) {
-        harvest(creep, ROLES.maintainer.color);
+        withdraw(creep, ROLES.maintainer.color);
     } else {
         const targets = creep.room.find(FIND_STRUCTURES, {
             filter: structure => {

@@ -1,5 +1,5 @@
 const upgraderRoutine = require('role.upgrader');
-const { harvest, build } = require('roleUtil');
+const { withdraw, build } = require('roleUtil');
 const { ROLES } = require('constants');
 
 function builderRoutine(creep) {
@@ -14,7 +14,7 @@ function builderRoutine(creep) {
 
     if (creep.memory.building && creep.store[RESOURCE_ENERGY] === 0) {
         creep.memory.building = false;
-        creep.say('🔄harvest');
+        creep.say('🔄withdraw');
     }
     if (!creep.memory.building && creep.store.getFreeCapacity() === 0) {
         creep.memory.building = true;
@@ -24,7 +24,7 @@ function builderRoutine(creep) {
     if (creep.memory.building) {
         build(creep);
     } else {
-        harvest(creep, ROLES.builder.color);
+        withdraw(creep, ROLES.builder.color);
     }
 }
 
