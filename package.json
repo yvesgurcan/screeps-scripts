@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "deploy": "node ./deploy/app.js"
+    "deploy": "node ./deploy/app.js",
+    "postversion": "npm run deploy"
   },
   "repository": {
     "type": "git",
