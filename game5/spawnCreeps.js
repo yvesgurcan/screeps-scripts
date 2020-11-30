@@ -65,14 +65,14 @@ function spawnCreeps() {
                     spawn(
                         nextSpawnCandidates[0].name,
                         nextSpawnCandidates[0].type
-                    ).from(room.spawns[0]);
+                    ).from(room.spawns[0].name);
                     return;
                 }
 
                 spawn(
                     nextSpawnCandidates[0].name,
                     nextSpawnCandidates[0].type
-                ).from(room.spawns[0]);
+                ).from(room.spawns[0].name);
                 return;
             }
 
@@ -90,7 +90,7 @@ function spawnCreeps() {
                 builders.length < MAX_BUILDERS_GRANDS_TRAVAUX
             ) {
                 room.creepsQueueEmpty = false;
-                spawn('builder', RICK).from(room.spawns[0]);
+                spawn('builder', RICK).from(room.spawns[0].name);
                 return;
             }
 
