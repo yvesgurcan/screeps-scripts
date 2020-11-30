@@ -109,6 +109,17 @@ function store(creep) {
     }
 }
 
+function build(creep) {
+    const target = creep.pos.findClosestByPath(FIND_MY_CONSTRUCTION_SITES);
+    if (target) {
+        if (creep.build(target) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(target, {
+                visualizePathStyle: { stroke: ROLES.builder.color }
+            });
+        }
+    }
+}
+
 function withdraw(creep, pathColor = 'yellow') {
     const container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
         filter: structure => {
@@ -140,23 +151,12 @@ function withdraw(creep, pathColor = 'yellow') {
     }
 }
 
-function build(creep) {
-    const target = creep.pos.findClosestByPath(FIND_MY_CONSTRUCTION_SITES);
-    if (target) {
-        if (creep.build(target) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(target, {
-                visualizePathStyle: { stroke: ROLES.builder.color }
-            });
-        }
-    }
-}
-
 module.exports = {
     isEmpty,
     isFull,
     harvest,
     store,
-    withdraw,
     build,
+    withdraw,
     sortByPath
 };

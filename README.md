@@ -1,5 +1,27 @@
 # Screeps Scripts
 
+## Automated behaviors
+
+### Spawner
+
+### Creeps
+
+#### Harvest (harvester)
+
+-   Creep moves towards source of energy #1 (or #0 if creep is of type `Woodhouse`) in the room to harvest once in range.
+
+#### Store (harvester)
+
+-   Creep moves towards the closest extension or spawn (or container if creep is of type `Alfred`) in the room that is not full to transfer energy once in range.
+
+#### Build (builder)
+
+-   Creep moves towards closest construction site to build once in range.
+
+#### Withdraw (claimer, maintainer, repairer, upgrader)
+
+-   Creep moves towards closest container with energy to withdraw once in range. Target container is memorized. If container becomes empty, creep will keep moving towards the same container.
+
 ## Error codes
 
 https://screeps.fandom.com/wiki/Error_Constants
