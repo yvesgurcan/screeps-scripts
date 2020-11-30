@@ -4,8 +4,6 @@ const { withdraw } = require('roleUtil');
 const { ROLES } = require('constants');
 
 function maintainerRoutine(creep) {
-    const roomName = creep.room.name;
-
     if (creep.store.getFreeCapacity() > 0) {
         withdraw(creep, ROLES.maintainer.color);
     } else {
@@ -29,7 +27,7 @@ function maintainerRoutine(creep) {
             // Switch task if no tower needs energy
         } else {
             // Construction sites exist
-            if (Memory.rooms[roomName].sites.length > 0) {
+            if (creep.room.memory.sites.length > 0) {
                 builderRoutine(creep);
                 return;
             }

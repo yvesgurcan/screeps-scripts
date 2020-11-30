@@ -3,10 +3,8 @@ const { withdraw, build } = require('roleUtil');
 const { ROLES } = require('constants');
 
 function builderRoutine(creep) {
-    const roomName = creep.room.name;
-
     // Switch task if no construction sites exist
-    if (Memory.rooms[roomName].sites.length <= 0) {
+    if (creep.room.memory.sites.length <= 0) {
         // Default to upgrade control room
         upgraderRoutine(creep);
         return;
