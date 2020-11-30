@@ -1,6 +1,5 @@
 const gameInfo = require('gameInfo');
 const { getBodyCost } = require('util');
-const { MAIN_ROOM } = require('constants');
 
 function addUtilFunctions() {
     if (!global.gameInfo) {
@@ -17,10 +16,8 @@ function addUtilFunctions() {
     }
 
     if (!global.removeConstructions) {
-        global.removeConstructions = () => {
-            const sites = Game.rooms[MAIN_ROOM].find(
-                FIND_MY_CONSTRUCTION_SITES
-            );
+        global.removeConstructions = roomName => {
+            const sites = Game.rooms[roomName].find(FIND_MY_CONSTRUCTION_SITES);
             for (const site of sites) {
                 site.remove();
             }

@@ -10,8 +10,6 @@ const CONSTRUCTION_QUEUE = [];
 
 const GRANDS_TRAVAUX = 10;
 
-const MAIN_ROOM = 'E35N2';
-
 const WOODHOUSE = 'Woodhouse';
 const ALFRED = 'Alfred';
 
@@ -97,7 +95,6 @@ const HP = {
 };
 
 module.exports = {
-    MAIN_ROOM,
     GRANDS_TRAVAUX,
     MAX_BUILDERS,
     MAX_BUILDERS_GRANDS_TRAVAUX,
