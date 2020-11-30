@@ -19,36 +19,40 @@ function gameInfo(reportAll = false) {
         }
 
         for (const roomName in Game.rooms) {
-            if (!Memory.rooms[roomName]) {
-                Memory.rooms[roomName] = {
-                    energy: 0,
-                    sites: 0
-                };
+            const room = Memory.rooms[roomName];
+            if (!room) {
+                room = {};
+            }
+
+            // TODO: Should update if the number of spawns changes
+            if (!room.spawns) {
+                room.spawns = Game.rooms.E35N2.find(FIND_MY_STRUCTURES, {
+                    filter: structure =>
+                        structure.structureType === STRUCTURE_SPAWN
+                });
             }
 
             const energyAvailable = Game.rooms[roomName].energyAvailable;
             const energyCapacity = Game.rooms[roomName].energyCapacityAvailable;
             if (
                 reportAll ||
-                Memory.rooms[roomName].energy !== energyAvailable ||
-                Memory.rooms[roomName].energyCapacity !== energyCapacity
+                room.energy !== energyAvailable ||
+                room.energyCapacity !== energyCapacity
             ) {
-                const diff =
-                    reportAll ||
-                    (Memory.rooms[roomName].energy || 0) - energyAvailable;
-                Memory.rooms[roomName].energy = energyAvailable;
+                const diff = reportAll || (room.energy || 0) - energyAvailable;
+                room.energy = energyAvailable;
                 if (
                     diff === true ||
-                    Memory.rooms[roomName].energyCapacity !== energyCapacity ||
+                    room.energyCapacity !== energyCapacity ||
                     energyAvailable % 10 === 0 ||
                     diff >= 10 ||
                     diff <= -10
                 ) {
                     console.log(
-                        `Energy in room ${roomName}: ${Memory.rooms[roomName].energy}/${energyCapacity}`
+                        `Energy in room ${roomName}: ${room.energy}/${energyCapacity}`
                     );
                 }
-                Memory.rooms[roomName].energyCapacity = energyCapacity;
+                room.energyCapacity = energyCapacity;
             }
 
             const availableEnergyStores = Game.rooms[roomName].find(
@@ -64,42 +68,39 @@ function gameInfo(reportAll = false) {
                 }
             );
 
-            if (!Memory.rooms[roomName].availableEnergyStores) {
-                Memory.rooms[roomName].availableEnergyStores = [];
+            if (!room.availableEnergyStores) {
+                room.availableEnergyStores = [];
             }
 
             if (
                 reportAll ||
-                Memory.rooms[roomName].availableEnergyStores.length !==
+                room.availableEnergyStores.length !==
                     availableEnergyStores.length
             ) {
                 Memory.rooms[
                     roomName
                 ].availableEnergyStores = availableEnergyStores;
                 console.log(
-                    `Available energy stores in room ${roomName}: ${Memory.rooms[roomName].availableEnergyStores.length}`
+                    `Available energy stores in room ${roomName}: ${room.availableEnergyStores.length}`
                 );
             }
 
-            if (!Memory.rooms[roomName].sites) {
-                Memory.rooms[roomName].sites = [];
+            if (!room.sites) {
+                room.sites = [];
             }
 
             const sites = Game.rooms[roomName].find(FIND_MY_CONSTRUCTION_SITES);
-            if (
-                reportAll ||
-                Memory.rooms[roomName].sites.length !== sites.length
-            ) {
-                Memory.rooms[roomName].sites = sites;
+            if (reportAll || room.sites.length !== sites.length) {
+                room.sites = sites;
                 console.log(
                     `Construction sites in room ${roomName}: ${
-                        Memory.rooms[roomName].sites.length
+                        room.sites.length
                     } (grands travaux: ${sites.length >= GRANDS_TRAVAUX})`
                 );
             }
 
-            if (!Memory.rooms[roomName].roles) {
-                Memory.rooms[roomName].roles = {};
+            if (!room.roles) {
+                room.roles = {};
             }
 
             for (const roleName in ROLES) {
@@ -108,35 +109,33 @@ function gameInfo(reportAll = false) {
 
                 if (
                     reportAll ||
-                    Memory.rooms[roomName].roles[`${role.name}s`] !==
-                        creeps.length
+                    room.roles[`${role.name}s`] !== creeps.length
                 ) {
-                    Memory.rooms[roomName].roles[`${role.name}s`] =
-                        creeps.length;
+                    room.roles[`${role.name}s`] = creeps.length;
                     const max =
                         role.name === 'builder' &&
-                        Memory.rooms[roomName].sites.length >= GRANDS_TRAVAUX
+                        room.sites.length >= GRANDS_TRAVAUX
                             ? MAX_BUILDERS_GRANDS_TRAVAUX
                             : role.max;
 
                     console.log(
                         `${capitalize(role.name)}s in room ${roomName}: ${
-                            Memory.rooms[roomName].roles[`${role.name}s`]
+                            room.roles[`${role.name}s`]
                         }/${max}`
                     );
 
                     for (let i = 0; i < role.types.length; i++) {
-                        if (!Memory.rooms[roomName].types) {
-                            Memory.rooms[roomName].types = {};
+                        if (!room.types) {
+                            room.types = {};
                         }
 
                         const type = role.types[i];
-                        Memory.rooms[roomName].types[type.name] = creeps.filter(
+                        room.types[type.name] = creeps.filter(
                             creep => creep.memory.type === type.name
                         ).length;
                         console.log(
                             `- ${type.name} in room ${roomName}: ${
-                                Memory.rooms[roomName].types[type.name]
+                                room.types[type.name]
                             }/${Math.ceil(type.ratio * role.max)}`
                         );
                     }
