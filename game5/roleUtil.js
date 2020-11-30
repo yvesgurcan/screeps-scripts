@@ -127,6 +127,17 @@ function withdraw(creep, pathColor = 'yellow') {
             visualizePathStyle: { stroke: pathColor }
         });
     }
+
+    if (!container && creep.memory.destination) {
+        creep.moveTo(creep.memory.destination.x, creep.memory.destination.y, {
+            visualizePathStyle: { stroke: pathColor }
+        });
+    }
+
+    // Remember target to keep going there even if it's empty
+    if (container) {
+        creep.memory.destination = { x: container.pos.x, y: container.pos.y };
+    }
 }
 
 function build(creep) {
