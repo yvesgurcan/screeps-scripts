@@ -1,5 +1,5 @@
 const { cpuExceedsLimit } = require('util');
-const { ROLES } = require('constants');
+const { ROLES, ALFRED, WOODHOUSE } = require('constants');
 
 function isEmpty(creep) {
     return creep.store[RESOURCE_ENERGY] === 0;
@@ -44,7 +44,7 @@ function harvest(creep, pathColor = 'yellow') {
     let sourceIndex = 1;
 
     try {
-        if (creep.memory.type === 'Woodhouse') {
+        if (creep.memory.type === WOODHOUSE) {
             sourceIndex = 0;
         }
     } catch (error) {
@@ -66,12 +66,12 @@ function store(creep) {
         structure.structureType === STRUCTURE_EXTENSION ||
         structure.structureType === STRUCTURE_SPAWN;
 
-    if (creep.memory.type === 'Alfred') {
+    if (creep.memory.type === ALFRED) {
         structureFilter = structure =>
             structure.structureType === STRUCTURE_CONTAINER;
     }
 
-    let targets = creep.room.find(FIND_STRUCTURES, {
+    let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
         filter: structure => {
             return (
                 structureFilter(structure) &&
@@ -81,8 +81,8 @@ function store(creep) {
     });
 
     // Containers are full
-    if (creep.memory.type === 'Alfred' && targets.length === 0) {
-        targets = creep.room.find(FIND_STRUCTURES, {
+    if (creep.memory.type === ALFRED && !target) {
+        target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
             filter: structure => {
                 return (
                     (structure.structureType === STRUCTURE_EXTENSION ||
@@ -93,16 +93,23 @@ function store(creep) {
         });
     }
 
-    const closestTargets = sortByPath(creep, targets);
+    // Extensions are full
+    if (creep.memory.type === WOODHOUSE && !target) {
+        target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            filter: structure => {
+                return (
+                    structure.structureType === STRUCTURE_CONTAINER &&
+                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+                );
+            }
+        });
+    }
 
-    if (closestTargets.length > 0) {
+    if (target) {
         // creep.say('🔋store');
         creep.memory.storing = true;
-        if (
-            creep.transfer(closestTargets[0], RESOURCE_ENERGY) ===
-            ERR_NOT_IN_RANGE
-        ) {
-            creep.moveTo(closestTargets[0], {
+        if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(target, {
                 visualizePathStyle: { stroke: 'white' }
             });
         }

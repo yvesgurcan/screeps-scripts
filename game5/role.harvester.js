@@ -1,12 +1,14 @@
 const builderRoutine = require('role.builder');
 const upgarderRoutine = require('role.upgrader');
 const { harvest, store } = require('roleUtil');
+const { WOODHOUSE } = require('constants');
 
 function harvesterRoutine(creep) {
     const roomName = creep.room.name;
 
     // Switch task if creep queue is empty and energy capacity is maxed out
     if (
+        creep.memory.type === WOODHOUSE &&
         Memory.rooms[roomName].energy ===
             Memory.rooms[roomName].energyCapacity &&
         Memory.rooms[roomName].creepsQueueEmpty

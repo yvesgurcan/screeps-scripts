@@ -104,5 +104,7 @@ module.exports = {
     CONSTRUCTION_QUEUE,
     ROLES,
     HP,
-    RICK
+    RICK,
+    ALFRED,
+    WOODHOUSE
 };

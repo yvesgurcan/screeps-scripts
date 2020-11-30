@@ -44,10 +44,12 @@ function getTime() {
 }
 
 function printBodyCostForRoles() {
+    const cost = {};
     for (const roleName in ROLES) {
         const role = ROLES[roleName];
-        console.log(`Cost for ${role.name}: ${getBodyCost(role.bodyParts)}`);
+        cost[role.name] = getBodyCost(role.bodyParts);
     }
+    console.log(`Creep cost: ${JSON.stringify(cost)}`);
 }
 
 function getBodyCost(bodyParts) {
