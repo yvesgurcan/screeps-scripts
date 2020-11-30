@@ -1,6 +1,10 @@
 # Screeps Scripts
 
-## Creep roles and creep types
+## Creep roles and types
+
+-   The role determines the behavior of a creep. Example of roles: `harvester` and `builder`. Creeps with the same role are made of the same body parts. The number of creeps with the same role in a room is predetermined.
+
+-   Types are subcategories within a role. Different types in a roles follow the same behavior with minor differences. Example of types: `Alfred` and `Krieger`. The number of creeps with the same type in a room is predetermined.
 
 ## Automated behaviors
 
