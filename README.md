@@ -1,8 +1,17 @@
 # Screeps Scripts
 
+## Creep roles and creep types
+
 ## Automated behaviors
 
-### Spawner
+### Spawners
+
+-   `Spawner1` spawns creeps based on the following factors:
+
+    -   Affordability: Creep roles with a cheaper body are spawned first if the room can not afford more expensive creep roles.
+    -   Deficit: The role and type of the creep to spawn are determined by the difference between the expected and actual number of creeps with this role in the room. Once a role has been identified as a spawn candidate, the algorithm looks for the first creep type that is in deficit within this role in the room.
+    -   Sort order: If affordability and deficit are identical for multiple creep roles, the order in which they are defined in the `ROLES` data structure determines which creep role and type spawns first.
+    -   Grands travaux: If no creeper roles are in deficit and the room has a number of constructions site greater than a predetermined amount, the spawner will spawn additional `builders` up to a predetermined limit.
 
 ### Creeps
 

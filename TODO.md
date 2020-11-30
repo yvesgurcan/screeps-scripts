@@ -2,3 +2,4 @@
 -   If extensions are full, switch harvesters to store resources in containers.
 -   If containers are full, switch harvesters to store resources in extensions.
 -   Calculate distance between a source of energy and a container to estimate number, speed, capacity (50 per carry part), and work (2 per work part) of Alfred harvesters.
+-   Remove hardcoded reference to Spawn1. Replace with a in-memory reference to the first spawner in a list in the room. For example: `{ rooms: { E35N2: { spawners: ['Spawner1-E35N2'] } } }`
