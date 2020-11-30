@@ -14,6 +14,7 @@ const {
 function spawnCreeps() {
     try {
         for (const roomName in Game.rooms) {
+            const room = Memory.rooms[roomName];
             let nextSpawnCandidates = [];
             let roleCount = 0;
             let cantAfford = false;
@@ -22,9 +23,7 @@ function spawnCreeps() {
                 roleCount++;
                 const role = ROLES[roleName];
 
-                if (
-                    getBodyCost(role.bodyParts) > Memory.rooms[roomName].energy
-                ) {
+                if (getBodyCost(role.bodyParts) > room.energy) {
                     cantAfford++;
                     continue;
                 }
@@ -61,19 +60,19 @@ function spawnCreeps() {
                     `Spawn candidates: ${JSON.stringify(nextSpawnCandidates)}`
                 );
 
-                Memory.rooms[roomName].creepsQueueEmpty = false;
+                room.creepsQueueEmpty = false;
                 if (nextSpawnCandidates.length === 1) {
                     spawn(
                         nextSpawnCandidates[0].name,
                         nextSpawnCandidates[0].type
-                    ).from('Spawn1');
+                    ).from(room.spawns[0]);
                     return;
                 }
 
                 spawn(
                     nextSpawnCandidates[0].name,
                     nextSpawnCandidates[0].type
-                ).from('Spawn1');
+                ).from(room.spawns[0]);
                 return;
             }
 
@@ -90,14 +89,14 @@ function spawnCreeps() {
                 constructionSites >= GRANDS_TRAVAUX &&
                 builders.length < MAX_BUILDERS_GRANDS_TRAVAUX
             ) {
-                Memory.rooms[roomName].creepsQueueEmpty = false;
-                spawn('builder', RICK).from('Spawn1');
+                room.creepsQueueEmpty = false;
+                spawn('builder', RICK).from(room.spawns[0]);
                 return;
             }
 
-            if (Memory.rooms[roomName].creepsQueueEmpty === false) {
+            if (room.creepsQueueEmpty === false) {
                 console.log('Creep building queue empty.');
-                Memory.rooms[roomName].creepsQueueEmpty = true;
+                room.creepsQueueEmpty = true;
             }
         }
     } catch (error) {

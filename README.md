@@ -12,7 +12,7 @@
 
 ### Spawners
 
--   `Spawner1` spawns creeps based on the following factors:
+-   First spawn building in each room spawns creeps based on the following factors:
 
     -   Affordability: Creep roles with a cheaper body are spawned first if the room can not afford more expensive creep roles.
     -   Deficit: The role and type of the creep to spawn are determined by the difference between the expected and actual number of creeps with this role in the room. Once a role has been identified as a spawn candidate, the algorithm looks for the first creep type that is in deficit within this role in the room.

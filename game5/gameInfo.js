@@ -29,7 +29,7 @@ function gameInfo(reportAll = false) {
                 room.spawns = Game.rooms.E35N2.find(FIND_MY_STRUCTURES, {
                     filter: structure =>
                         structure.structureType === STRUCTURE_SPAWN
-                });
+                }).map(spawn => spawn.name);
             }
 
             const energyAvailable = Game.rooms[roomName].energyAvailable;
