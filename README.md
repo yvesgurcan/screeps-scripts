@@ -10,6 +10,13 @@
 
 ## Automated behaviors
 
+### Constructions
+
+In controlled rooms, the following construction sites are automatically placed for `builder` creeps to build:
+
+-   Roads from the spawn to all energy sources.
+-   Road from the spawn to the room controller.
+
 ### Spawners
 
 -   First spawn building in each room spawns creeps based on the following factors:

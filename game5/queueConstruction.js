@@ -2,13 +2,17 @@ const { CONSTRUCTION_QUEUE } = require('constants');
 
 function buildRoadToSources(room) {
     const origin = room.spawns[0].pos;
-    const goal = Game.spawns[room.spawns[0].name].room.find(FIND_SOURCES)[0]
-        .pos;
-    const path = PathFinder.search(origin, { pos: goal, range: 1 }).path;
 
-    path.map(({ roomName, x, y }) => {
-        Game.rooms[roomName].createConstructionSite(x, y, STRUCTURE_ROAD);
-    });
+    const sources = Game.spawns[room.spawns[0].name].room.find(FIND_SOURCES);
+
+    for (let i = 0; i < sources.length; i++) {
+        const goal = sources[i].pos;
+        const path = PathFinder.search(origin, { pos: goal, range: 1 }).path;
+
+        path.map(({ roomName, x, y }) => {
+            Game.rooms[roomName].createConstructionSite(x, y, STRUCTURE_ROAD);
+        });
+    }
 }
 
 function buildRoadToController(room) {
