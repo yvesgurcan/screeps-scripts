@@ -1,5 +1,9 @@
--   Build ramparts on critical paths.
--   Save road to source coordinates in memory.
+-   Create a Transferer role that moves energy from extensions to containers when room energy is greater than 50%. Max Transferers = 2. Great carry and move capacity.
+-   Save list of structures that need repair in memory every 5 ticks.
+-   Create a Corbusier type for builders with ratio 0.66. Alter behavior of builders of type "Corbusier" to repair if structures need repair and they don't have anything to build. Other types upgrade if they don't have anything to build.
+-   Add a `VETUSTE` mode that activates if more than 10 structures need repair. Spawn will increase number of repairers by 2 when room is in `VETUSTE` mode.
+
+-   Save road to source coordinates in memory once for each room.
 -   If energy source dies and harvester has resources in their store, store these resources in extensions/containers.
 -   Calculate distance between a source of energy and a container to estimate number, speed, capacity (50 per carry part), and work (2 per work part) of Alfred harvesters.
 -   Creep recuperates energy lying around in room.
@@ -7,4 +11,5 @@
 -   Add function to deregister critical tiles from memory.
 -   Improve towers repair logic by choosing its target randomly.
 -   Have builder give a little energy to walls and remparts upon build.
--   Create a harvester type that moves energy from extensions to containers.
+-   Dispatch repairers to multiple targets if more than one structure needs repairs to prevent useless movements.
+-   Transferers only spawn if room has extensions and containers.
