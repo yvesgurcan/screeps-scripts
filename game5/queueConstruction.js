@@ -20,7 +20,7 @@ function buildRoadToSources(room) {
         for (let i = 0; i < 8; i++) {
             const x = goal.x + X_RELATIVE_TO_GOAL[i];
             const y = goal.y + Y_RELATIVE_TO_GOAL[i];
-            Game.rooms[roomName].createConstructionSite(x, y, STRUCTURE_ROAD);
+            Game.rooms[room.name].createConstructionSite(x, y, STRUCTURE_ROAD);
         }
     }
 }
@@ -76,7 +76,7 @@ function queueConstruction() {
         });
 
         for (let roomName in Game.rooms) {
-            const room = Memory.rooms[roomName];
+            const room = { ...Memory.rooms[roomName], name: roomName };
             buildRoadToSources(room);
             buildRoadToController(room);
             blockCriticalPaths(room);
