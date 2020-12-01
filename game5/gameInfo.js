@@ -1,14 +1,21 @@
 const {
     getCreepsFromRole,
     capitalize,
-    printBodyCostForRoles
+    printBodyCostForRoles,
+    isTick,
+    isCriticalPath,
+    cpuExceedsLimit
 } = require('util');
 const constants = require('constants');
 const { ROLES, HP, ...selectedConstants } = constants;
-const { GRANDS_TRAVAUX, MAX_BUILDERS_GRANDS_TRAVAUX } = constants;
+const { GRANDS_TRAVAUX, MAX_BUILDERS_GRANDS_TRAVAUX, ROOM_WIDTH } = constants;
 
 function gameInfo(reportAll = false) {
     try {
+        if (isTick(10)) {
+            console.log(`Tick #${Game.time}.`);
+        }
+
         if (reportAll) {
             console.log(`Constants: ${JSON.stringify(selectedConstants)}`);
             printBodyCostForRoles();

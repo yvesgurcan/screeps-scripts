@@ -1,6 +1,10 @@
--   Build roads in a 9-tile square around energy sources.
--   Save critical paths in the memory of the room. Critical path are 2-by-2 plain areas (no constructed walls on it). The area must be surrounded with plains on one side and plains on the opposite side and walls (constructed or natural) on the other 2 sides.
--   Check for new critical paths when a builder builds a constructed wall in a room.
 -   Build ramparts on critical paths.
+-   Save road to source coordinates in memory.
 -   If energy source dies and harvester has resources in their store, store these resources in extensions/containers.
 -   Calculate distance between a source of energy and a container to estimate number, speed, capacity (50 per carry part), and work (2 per work part) of Alfred harvesters.
+-   Creep recuperates energy lying around in room.
+-   Only defend controlled rooms with towers. Still notify in controlled rooms without towers.
+-   Add function to deregister critical tiles from memory.
+-   Improve towers repair logic by choosing its target randomly.
+-   Have builder give a little energy to walls and remparts upon build.
+-   Create a harvester type that moves energy from extensions to containers.

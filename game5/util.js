@@ -1,13 +1,5 @@
 const { ROLES } = require('constants');
 
-function getCreepsFromRole(creepRole) {
-    return _.filter(Game.creeps, creep => creep.memory.role === creepRole);
-}
-
-function pickNumberInRange(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.substring(1);
 }
@@ -16,6 +8,31 @@ function capitalizedCharacters(string, numberOfCharacters = 2) {
     return (
         string.charAt(0).toUpperCase() + string.substring(1, numberOfCharacters)
     );
+}
+
+function cpuUsage(info, record = false) {
+    const usage = Math.floor(Game.cpu.getUsed());
+
+    if (record) {
+        if (Memory.cpuUsage === usage) {
+            return;
+        }
+        Memory.cpuUsage = usage;
+    }
+
+    console.log(
+        `CPU usage${info ? ` at ${info}` : ''}: ${usage}/${Game.cpu.limit}.`
+    );
+}
+
+function cpuExceedsLimit() {
+    const exceeds = Game.cpu.getUsed() > Game.cpu.limit;
+
+    if (exceeds) {
+        console.log(`CPU usage limit reached.`);
+    }
+
+    return exceeds;
 }
 
 function getTime() {
@@ -56,6 +73,10 @@ function getBodyCost(bodyParts) {
     return _.sum(bodyParts, bodyPart => BODYPART_COST[bodyPart]);
 }
 
+function getCreepsFromRole(creepRole) {
+    return _.filter(Game.creeps, creep => creep.memory.role === creepRole);
+}
+
 function cleanUpCreepMemory() {
     for (const name in Memory.creeps) {
         if (!Game.creeps[name]) {
@@ -65,34 +86,79 @@ function cleanUpCreepMemory() {
     }
 }
 
-function cpuUsage(info, record = false) {
-    const usage = Math.floor(Game.cpu.getUsed());
-
-    if (record) {
-        if (Memory.cpuUsage === usage) {
-            return;
-        }
-        Memory.cpuUsage = usage;
-    }
-
-    console.log(
-        `CPU usage${info ? ` at ${info}` : ''}: ${usage}/${Game.cpu.limit}.`
-    );
+function isTick(tick = 2) {
+    return Game.time % tick === 0;
 }
 
-function cpuExceedsLimit() {
-    const exceeds = Game.cpu.getUsed() > Game.cpu.limit;
-
-    if (exceeds) {
-        console.log(`CPU usage limit reached.`);
+function isNotConstructibleForRampart(x, y, terrain, structures) {
+    const coordinates = `${x}-${y}`;
+    if (terrain.get(x, y) === TERRAIN_MASK_WALL) {
+        return false;
     }
 
-    return exceeds;
+    if (
+        structures[y] &&
+        structures[y][x] &&
+        structures[y][x].filter(
+            structure => structure.structureType === STRUCTURE_WALL
+        ).length > 0
+    ) {
+        return false;
+    }
+
+    return coordinates;
+}
+
+function isCriticalTiles(topX, topY, terrain, roomName) {
+    const bottomY = topY + 1;
+    const bottomX = topX + 1;
+
+    const structures = Game.rooms[roomName].lookForAtArea(
+        LOOK_STRUCTURES,
+        topY - 1,
+        topX - 1,
+        bottomY + 1,
+        bottomX + 1
+    );
+
+    const criticalTiles = new Set();
+
+    const topLeft = isNotConstructibleForRampart(
+        topX,
+        topY,
+        terrain,
+        structures
+    );
+    const topRight = isNotConstructibleForRampart(
+        bottomX,
+        topY,
+        terrain,
+        structures
+    );
+    const bottomLeft = isNotConstructibleForRampart(
+        topX,
+        bottomY,
+        terrain,
+        structures
+    );
+    const bottomRight = isNotConstructibleForRampart(
+        bottomX,
+        bottomY,
+        terrain,
+        structures
+    );
+
+    const centerPlains = [topLeft, topRight, bottomLeft, bottomRight].filter(
+        tile => tile
+    );
+
+    centerPlains.map(plain => criticalTiles.add(plain));
+
+    return criticalTiles;
 }
 
 module.exports = {
     getCreepsFromRole,
-    pickNumberInRange,
     capitalize,
     capitalizedCharacters,
     getTime,
@@ -100,5 +166,7 @@ module.exports = {
     printBodyCostForRoles,
     cleanUpCreepMemory,
     cpuUsage,
-    cpuExceedsLimit
+    cpuExceedsLimit,
+    isTick,
+    isCriticalTiles
 };

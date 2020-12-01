@@ -94,6 +94,9 @@ const HP = {
     HP_500K: 500000
 };
 
+const ROOM_WIDTH = 50;
+const ROOM_HEIGHT = 50;
+
 module.exports = {
     GRANDS_TRAVAUX,
     MAX_BUILDERS,
@@ -101,10 +104,12 @@ module.exports = {
     MAX_UPGRADERS,
     MAX_HARVESTERS,
     MAX_MAINTAINERS,
+    RICK,
+    ALFRED,
+    WOODHOUSE,
     CONSTRUCTION_QUEUE,
     ROLES,
     HP,
-    RICK,
-    ALFRED,
-    WOODHOUSE
+    ROOM_WIDTH,
+    ROOM_HEIGHT
 };

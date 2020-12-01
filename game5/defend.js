@@ -1,4 +1,5 @@
 const { HP } = require('constants');
+const { isTick } = require('util');
 
 const SAFE_MODE_RESULTS_MAP = {
     [OK]: 'Success',
@@ -9,6 +10,10 @@ const SAFE_MODE_RESULTS_MAP = {
 };
 
 function activateSafeMode(roomName) {
+    if (!isTick(10)) {
+        return;
+    }
+
     const resultSafeMode = Game.rooms[roomName].controller.activateSafeMode();
     const mappedResultSafeMode = SAFE_MODE_RESULTS_MAP[resultSafeMode];
 
@@ -28,6 +33,7 @@ function defend() {
             const towers = Game.rooms[roomName].find(FIND_MY_STRUCTURES, {
                 filter: { structureType: STRUCTURE_TOWER }
             });
+
             const hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
 
             if (hostiles.length > 0) {

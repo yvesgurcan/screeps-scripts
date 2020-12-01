@@ -20,26 +20,6 @@ function getSource(creep, sourceIndex = 0) {
     return sources[sourceIndex];
 }
 
-function sortByPath(creep, targets) {
-    let targetsPathLength = [];
-
-    if (cpuExceedsLimit()) {
-        return targets.map(target => Game.getObjectById(target.id));
-    }
-
-    for (let i = 0; i < targets.length; i++) {
-        const target = targets[i];
-        targetsPathLength.push({
-            target,
-            // Sucks CPU
-            pathLength: creep.pos.findPathTo(targets[i]).length
-        });
-    }
-
-    targetsPathLength.sort((a, b) => a.pathLength - b.pathLength);
-    return targetsPathLength.map(t => Game.getObjectById(t.target.id));
-}
-
 function harvest(creep, pathColor = 'yellow') {
     let sourceIndex = 1;
 
@@ -164,6 +144,5 @@ module.exports = {
     harvest,
     store,
     build,
-    withdraw,
-    sortByPath
+    withdraw
 };

@@ -1,5 +1,5 @@
 const gameInfo = require('gameInfo');
-const { getBodyCost } = require('util');
+const { getBodyCost, isCriticalTiles } = require('util');
 
 function addUtilFunctions() {
     if (!global.gameInfo) {
@@ -21,6 +21,42 @@ function addUtilFunctions() {
             for (const site of sites) {
                 site.remove();
             }
+
+            return 'done';
+        };
+    }
+
+    if (!global.registerCriticalTiles) {
+        global.registerCriticalTiles = (roomName, x, y) => {
+            const terrain = Game.map.getRoomTerrain(roomName);
+            let criticalPaths = new Set();
+
+            const save = isCriticalTiles(x, y, terrain, roomName);
+            if (save && save.size > 0) {
+                criticalPaths = new Set([...criticalPaths, ...save]);
+            }
+
+            criticalPaths.delete(false);
+
+            console.log('New critical tiles:', Array.from(criticalPaths));
+
+            const room = Memory.rooms[roomName];
+            if (!room) {
+                room = {};
+            }
+
+            if (!room.criticalPaths) {
+                room.criticalPaths = [];
+            }
+
+            room.criticalPaths = [
+                ...new Set([
+                    ...room.criticalPaths,
+                    ...Array.from(criticalPaths)
+                ])
+            ];
+
+            return room.criticalPaths;
         };
     }
 }

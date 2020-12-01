@@ -12,14 +12,24 @@
 
 ### Constructions
 
-In controlled rooms, the following construction sites are automatically placed for `builder` creeps to build:
+In available rooms, the following construction sites are automatically placed every 10 ticks for `builder` creeps to build:
 
--   Roads from the spawn to all energy sources.
+-   Buildings in the `CONSTRUCTION_QUEUE`.
+-   Road from the spawn to each energy source.
+-   Road surrounding in a 1-tile radius each energy source.
 -   Road from the spawn to the room controller.
+
+### Defense
+
+Available rooms listen for hostile presence. If hostiles are found:
+
+-   Player is notified.
+-   Safe mode is activated every 10 ticks. Player is notified of the results.
+-   Existing towers attempt to attack the intruders.
 
 ### Spawners
 
--   First spawn building in each room spawns creeps based on the following factors:
+-   Every 5 ticks, first spawn building in each room spawns creeps based on the following factors:
 
     -   Affordability: Creep roles with a cheaper body are spawned first if the room can not afford more expensive creep roles.
     -   Deficit: The role and type of the creep to spawn are determined by the difference between the expected and actual number of creeps with this role in the room. Once a role has been identified as a spawn candidate, the algorithm looks for the first creep type that is in deficit within this role in the room.

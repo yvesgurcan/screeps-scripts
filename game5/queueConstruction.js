@@ -1,4 +1,5 @@
 const { CONSTRUCTION_QUEUE } = require('constants');
+const { isTick } = require('util');
 
 const Y_RELATIVE_TO_GOAL = [-1, -1, -1, 0, 0, 1, 1, 1];
 const X_RELATIVE_TO_GOAL = [-1, 0, 1, -1, 1, -1, 0, 1];
@@ -16,10 +17,23 @@ function buildRoadToSources(room) {
             Game.rooms[roomName].createConstructionSite(x, y, STRUCTURE_ROAD);
         });
 
+        const area = Game.rooms[room.name].lookAtArea(
+            goal.y + Y_RELATIVE_TO_GOAL[0],
+            goal.x + X_RELATIVE_TO_GOAL[0],
+            goal.y + Y_RELATIVE_TO_GOAL[Y_RELATIVE_TO_GOAL.length - 1],
+            goal.x + X_RELATIVE_TO_GOAL[X_RELATIVE_TO_GOAL.length - 1]
+        );
+
         // Build roads around energy source
         for (let i = 0; i < 8; i++) {
             const x = goal.x + X_RELATIVE_TO_GOAL[i];
             const y = goal.y + Y_RELATIVE_TO_GOAL[i];
+
+            const tile = area[y][x];
+            if (tile.find(t => t.terrain === 'wall')) {
+                continue;
+            }
+
             Game.rooms[room.name].createConstructionSite(x, y, STRUCTURE_ROAD);
         }
     }
@@ -39,10 +53,23 @@ function blockCriticalPaths(room) {
     if (!room.criticalPaths) {
         return;
     }
+
+    room.criticalPaths.map(coordinates => {
+        const [x, y] = coordinates.split('-');
+        Game.rooms[room.name].createConstructionSite(
+            Number(x),
+            Number(y),
+            STRUCTURE_RAMPART
+        );
+    });
 }
 
 function queueConstruction() {
     try {
+        if (!isTick(10)) {
+            return;
+        }
+
         CONSTRUCTION_QUEUE.forEach(({ roomName, x, y, type }) => {
             const lookAt = Game.rooms[roomName].lookAt(x, y);
             const occupied = lookAt.find(
@@ -53,12 +80,12 @@ function queueConstruction() {
                 const obstacle =
                     occupied.structure || occupied.constructionSite;
                 /*
-                console.log(
-                    `Can not build ${type} at {${x}, ${y}}: Occupied by ${
-                        obstacle.structureType
-                    } ${obstacle.name || ''}`
-                );
-                */
+                    console.log(
+                        `Can not build ${type} at {${x}, ${y}}: Occupied by ${
+                            obstacle.structureType
+                        } ${obstacle.name || ''}`
+                    );
+                    */
                 return;
             }
 
@@ -69,10 +96,10 @@ function queueConstruction() {
             );
 
             /*
-            console.log(
-                `Construction site placement result: ${JSON.stringify(resultSite)}`
-            );
-            */
+                console.log(
+                    `Construction site placement result: ${JSON.stringify(resultSite)}`
+                );
+                */
         });
 
         for (let roomName in Game.rooms) {
