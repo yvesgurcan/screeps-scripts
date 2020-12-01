@@ -1,5 +1,8 @@
 const { CONSTRUCTION_QUEUE } = require('constants');
 
+const Y_RELATIVE_TO_GOAL = [-1, -1, -1, 0, 0, 1, 1, 1];
+const X_RELATIVE_TO_GOAL = [-1, 0, 1, -1, 1, -1, 0, 1];
+
 function buildRoadToSources(room) {
     const origin = room.spawns[0].pos;
 
@@ -12,6 +15,13 @@ function buildRoadToSources(room) {
         path.map(({ roomName, x, y }) => {
             Game.rooms[roomName].createConstructionSite(x, y, STRUCTURE_ROAD);
         });
+
+        // Build roads around energy source
+        for (let i = 0; i < 8; i++) {
+            const x = goal.x + X_RELATIVE_TO_GOAL[i];
+            const y = goal.y + Y_RELATIVE_TO_GOAL[i];
+            Game.rooms[roomName].createConstructionSite(x, y, STRUCTURE_ROAD);
+        }
     }
 }
 
@@ -23,6 +33,12 @@ function buildRoadToController(room) {
     path.map(({ roomName, x, y }) => {
         Game.rooms[roomName].createConstructionSite(x, y, STRUCTURE_ROAD);
     });
+}
+
+function blockCriticalPaths(room) {
+    if (!room.criticalPaths) {
+        return;
+    }
 }
 
 function queueConstruction() {
@@ -63,6 +79,7 @@ function queueConstruction() {
             const room = Memory.rooms[roomName];
             buildRoadToSources(room);
             buildRoadToController(room);
+            blockCriticalPaths(room);
         }
     } catch (error) {
         console.log('Error in construction queue.');
