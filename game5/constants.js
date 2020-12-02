@@ -4,6 +4,7 @@ const MAX_REPAIRERS = 3;
 const MAX_UPGRADERS = 1;
 const MAX_BUILDERS = 3;
 const MAX_BUILDERS_GRANDS_TRAVAUX = MAX_BUILDERS + 3;
+const MAX_TRANSFERERS = 2;
 const MAX_CLAIMERS = 0;
 
 const CONSTRUCTION_QUEUE = [];
@@ -20,6 +21,8 @@ const BETH = 'Beth';
 const KRIEGER = 'Krieger';
 
 const RICK = 'Rick';
+
+const LAVOISIER = 'Lavoisier';
 
 const DUNCAN = 'Duncan';
 
@@ -74,6 +77,21 @@ const ROLES = {
         bodyParts: [WORK, WORK, CARRY, MOVE, MOVE, MOVE],
         max: MAX_MAINTAINERS,
         color: 'blue'
+    },
+
+    transferer: {
+        name: 'transferer',
+        types: [
+            {
+                name: LAVOISIER,
+                ratio: 1
+            }
+        ],
+        generation: 1,
+        // Fast movement and fast work
+        bodyParts: [WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
+        max: MAX_TRANSFERERS,
+        color: 'pink'
     },
     // Claimer is too expensive to get built: Other creeps die before room can gather enough energy to afford Duncan
     claimer: {

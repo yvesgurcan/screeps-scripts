@@ -3,6 +3,7 @@ const upgraderRoutine = require('role.upgrader');
 const builderRoutine = require('role.builder');
 const maintainerRoutine = require('role.maintainer');
 const repairerRoutine = require('role.repairer');
+const transfererRoutine = require('role.transferer');
 const claimerRoutine = require('role.claimer');
 
 // Add new routines here
@@ -12,6 +13,7 @@ const routines = {
     builderRoutine,
     maintainerRoutine,
     repairerRoutine,
+    transfererRoutine,
     claimerRoutine
 };
 
