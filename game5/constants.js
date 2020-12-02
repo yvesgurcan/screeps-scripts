@@ -1,4 +1,4 @@
-const MAX_HARVESTERS = 7;
+const MAX_HARVESTERS = 6;
 const MAX_MAINTAINERS = 1;
 const MAX_REPAIRERS = 4;
 const MAX_UPGRADERS = 1;
@@ -35,7 +35,7 @@ const ROLES = {
                 name: WOODHOUSE,
                 ratio: 0.5
             },
-            { name: ALFRED, ratio: 0.4 }
+            { name: ALFRED, ratio: 0.5 }
         ],
         generation: 3,
         // Fast movement and fast work
