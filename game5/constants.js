@@ -1,6 +1,6 @@
 const MAX_HARVESTERS = 7;
 const MAX_MAINTAINERS = 1;
-const MAX_REPAIRERS = 3;
+const MAX_REPAIRERS = 4;
 const MAX_UPGRADERS = 1;
 const MAX_BUILDERS = 3;
 const MAX_BUILDERS_GRANDS_TRAVAUX = MAX_BUILDERS + 3;
@@ -73,8 +73,8 @@ const ROLES = {
     maintainer: {
         name: 'maintainer',
         types: [{ name: AMMON, ratio: 1 }],
-        generation: 4,
-        bodyParts: [WORK, WORK, CARRY, MOVE, MOVE, MOVE],
+        generation: 5,
+        bodyParts: [WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
         max: MAX_MAINTAINERS,
         color: 'blue'
     },
@@ -91,7 +91,7 @@ const ROLES = {
         // Fast movement and fast work
         bodyParts: [WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
         max: MAX_TRANSFERERS,
-        color: 'pink'
+        color: 'black'
     },
     // Claimer is too expensive to get built: Other creeps die before room can gather enough energy to afford Duncan
     claimer: {

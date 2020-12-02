@@ -96,6 +96,30 @@ function store(creep) {
     }
 }
 
+function storeIntoContainers(creep, pathColor = 'white') {
+    let structureFilter = structure =>
+        structure.structureType === STRUCTURE_CONTAINER;
+
+    let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+        filter: structure => {
+            return (
+                structureFilter(structure) &&
+                structure.store[RESOURCE_ENERGY] !== 0
+            );
+        }
+    });
+
+    if (target) {
+        // creep.say('🔋store');
+        creep.memory.storing = true;
+        if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(target, {
+                visualizePathStyle: { stroke: pathColor }
+            });
+        }
+    }
+}
+
 function build(creep) {
     const target = creep.pos.findClosestByPath(FIND_MY_CONSTRUCTION_SITES);
     if (target) {
@@ -138,11 +162,44 @@ function withdraw(creep, pathColor = 'yellow') {
     }
 }
 
+function withdrawFromExtensions(creep, pathColor = 'yellow') {
+    const container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+        filter: structure => {
+            return (
+                structure.structureType === STRUCTURE_EXTENSION &&
+                structure.store[RESOURCE_ENERGY] > 0
+            );
+        }
+    });
+
+    if (
+        container &&
+        creep.withdraw(container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE
+    ) {
+        creep.moveTo(container, {
+            visualizePathStyle: { stroke: pathColor }
+        });
+    }
+
+    if (!container && creep.memory.destination) {
+        creep.moveTo(creep.memory.destination.x, creep.memory.destination.y, {
+            visualizePathStyle: { stroke: pathColor }
+        });
+    }
+
+    // Remember target to keep going there even if it's empty
+    if (container) {
+        creep.memory.destination = { x: container.pos.x, y: container.pos.y };
+    }
+}
+
 module.exports = {
     isEmpty,
     isFull,
     harvest,
     store,
+    storeIntoContainers,
     build,
-    withdraw
+    withdraw,
+    withdrawFromExtensions
 };
