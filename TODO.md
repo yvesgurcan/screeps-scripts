@@ -1,4 +1,6 @@
--   Create a Transferer role that moves energy from extensions to containers when room energy is greater than 50%. Max Transferers = 2. Great carry and move capacity.
+-   Register in memory the list of dead energy sources for each room every 2 ticks.
+-   Replace harvesting-related logic that is tied to the availability of energy sources. Alternatively, develop better strategies based on whether an energy source is dead.
+
 -   Save list of structures that need repair in memory every 5 ticks.
 -   Create a Corbusier type for builders with ratio 0.66. Alter behavior of builders of type "Corbusier" to repair if structures need repair and they don't have anything to build. Other types upgrade if they don't have anything to build.
 -   Add a `VETUSTE` mode that activates if more than 10 structures need repair. Spawn will increase number of repairers by 2 when room is in `VETUSTE` mode.
