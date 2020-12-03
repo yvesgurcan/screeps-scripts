@@ -16,15 +16,15 @@ function repairerRoutine(creep) {
     }
 
     if (creep.memory.repairing) {
-        const targets = creep.room.find(FIND_STRUCTURES, {
+        const target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: structure =>
                 structure.hits < structure.hitsMax &&
                 // Don't repair beyond
                 structure.hits < HP.HP_500K
         });
-        if (targets.length > 0) {
-            if (creep.repair(targets[0]) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(targets[0], {
+        if (target) {
+            if (creep.repair(target) === ERR_NOT_IN_RANGE) {
+                creep.moveTo(target, {
                     visualizePathStyle: { stroke: ROLES.repairer.color }
                 });
             }
