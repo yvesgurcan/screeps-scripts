@@ -9,9 +9,19 @@ function buildRoadToSources(room) {
 
     const sources = Game.spawns[room.spawns[0].name].room.find(FIND_SOURCES);
 
+    if (!Memory.rooms[room.name].pathToSources) {
+        Memory.rooms[room.name].pathToSources = [];
+    }
+
     for (let i = 0; i < sources.length; i++) {
         const goal = sources[i].pos;
-        const path = PathFinder.search(origin, { pos: goal, range: 1 }).path;
+        let path = [];
+        if (Memory.rooms[room.name].pathToSources[i]) {
+            path = Memory.rooms[room.name].pathToSources[i];
+        } else {
+            path = PathFinder.search(origin, { pos: goal, range: 1 }).path;
+            Memory.rooms[room.name].pathToSources[i] = path;
+        }
 
         path.map(({ roomName, x, y }) => {
             Game.rooms[roomName].createConstructionSite(x, y, STRUCTURE_ROAD);

@@ -1,11 +1,10 @@
+-   Add a `VETUSTE` mode that activates if more than 30 structures need repair. Spawn will increase number of repairers by 2 when room is in `VETUSTE` mode.
+
 -   Register in memory the list of dead energy sources for each room every 2 ticks.
 -   Replace harvesting-related logic that is tied to the availability of energy sources. Alternatively, develop better strategies based on whether an energy source is dead.
 
--   Save list of structures that need repair in memory every 5 ticks.
 -   Create a Corbusier type for builders with ratio 0.66. Alter behavior of builders of type "Corbusier" to repair if structures need repair and they don't have anything to build. Other types upgrade if they don't have anything to build.
--   Add a `VETUSTE` mode that activates if more than 10 structures need repair. Spawn will increase number of repairers by 2 when room is in `VETUSTE` mode.
 
--   Save road to source coordinates in memory once for each room.
 -   If energy source dies and harvester has resources in their store, store these resources in extensions/containers.
 -   Calculate distance between a source of energy and a container to estimate number, speed, capacity (50 per carry part), and work (2 per work part) of Alfred harvesters.
 -   Creep recuperates energy lying around in room.

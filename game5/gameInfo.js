@@ -2,9 +2,7 @@ const {
     getCreepsFromRole,
     capitalize,
     printBodyCostForRoles,
-    isTick,
-    isCriticalPath,
-    cpuExceedsLimit
+    isTick
 } = require('util');
 const constants = require('constants');
 const { ROLES, HP, ...selectedConstants } = constants;
@@ -97,12 +95,33 @@ function gameInfo(reportAll = false) {
             }
 
             const sites = Game.rooms[roomName].find(FIND_MY_CONSTRUCTION_SITES);
-            if (reportAll || room.sites.length !== sites.length) {
+            if (
+                reportAll ||
+                !room.sites ||
+                room.sites.length !== sites.length
+            ) {
                 room.sites = sites;
                 console.log(
                     `Construction sites in room ${roomName}: ${
                         room.sites.length
                     } (grands travaux: ${sites.length >= GRANDS_TRAVAUX})`
+                );
+            }
+
+            const decayedStructures = Game.rooms[roomName].find(
+                FIND_STRUCTURES,
+                {
+                    filter: structure => structure.hits < structure.hitsMax
+                }
+            );
+            if (
+                reportAll ||
+                !room.decayedStructures ||
+                room.decayedStructures.length !== decayedStructures.length
+            ) {
+                room.decayedStructures = decayedStructures;
+                console.log(
+                    `Structures needing repair in room ${roomName}: ${room.decayedStructures.length}`
                 );
             }
 
