@@ -144,6 +144,9 @@ function gameInfo(reportAll = false) {
                         role.name === 'builder' &&
                         room.sites.length >= GRANDS_TRAVAUX
                             ? MAX_BUILDERS_GRANDS_TRAVAUX
+                            : role.name === 'repairer' &&
+                              room.decayedStructures.length >= VETUSTE
+                            ? MAX_BUILDERS_GRANDS_TRAVAUX
                             : role.max;
 
                     console.log(
