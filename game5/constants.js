@@ -1,5 +1,5 @@
 const MAX_HARVESTERS = 6;
-const MAX_MAINTAINERS = 2;
+const MAX_MAINTAINERS = 1;
 const MAX_REPAIRERS = 3;
 const MAX_REPAIRERS_VETUSTE = MAX_REPAIRERS + 3;
 const MAX_UPGRADERS = 1;
@@ -40,18 +40,20 @@ const ROLES = {
             },
             { name: ALFRED, ratio: 0.5 }
         ],
-        generation: 3,
+        generation: 4,
         // Fast movement and fast work
-        bodyParts: [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
+        // bodyParts: [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE],
+        bodyParts: [WORK, CARRY, MOVE],
         max: MAX_HARVESTERS,
         color: 'yellow'
     },
     builder: {
         name: 'builder',
         types: [{ name: RICK, ratio: 1 }],
-        generation: 3,
+        generation: 4,
         // Great capacity and fast movement
-        bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
+        // bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
+        bodyParts: [WORK, CARRY, MOVE],
         max: MAX_BUILDERS,
         boostSpawnRule: (creeps, roomName) => {
             const constructionSites = Game.rooms[roomName].find(
@@ -73,9 +75,9 @@ const ROLES = {
     repairer: {
         name: 'repairer',
         types: [{ name: BETH, ratio: 1 }],
-        generation: 2,
+        generation: 3,
         // Great capacity and fast movement
-        bodyParts: [
+        /* bodyParts: [
             WORK,
             WORK,
             CARRY,
@@ -86,7 +88,8 @@ const ROLES = {
             MOVE,
             MOVE,
             MOVE
-        ],
+        ], */
+        bodyParts: [WORK, CARRY, MOVE],
         max: MAX_REPAIRERS,
         boostSpawnRule: (creeps, roomName) => {
             const decayedStructures =
@@ -107,9 +110,10 @@ const ROLES = {
     upgrader: {
         name: 'upgrader',
         types: [{ name: KRIEGER, ratio: 1 }],
-        generation: 4,
+        generation: 5,
         // Great capacity
-        bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
+        // bodyParts: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
+        bodyParts: [WORK, CARRY, MOVE],
         max: MAX_UPGRADERS,
         color: 'purple'
     },
@@ -117,10 +121,10 @@ const ROLES = {
     maintainer: {
         name: 'maintainer',
         types: [
-            { name: AMMON, ratio: 0.5 },
-            { name: GLADOS, ratio: 0.5 }
+            { name: AMMON, ratio: 1 },
+            { name: GLADOS, ratio: 0 }
         ],
-        generation: 6,
+        generation: 7,
         bodyParts: [WORK, CARRY, CARRY, CARRY, MOVE, MOVE],
         max: MAX_MAINTAINERS,
         color: 'blue'
@@ -134,9 +138,10 @@ const ROLES = {
                 ratio: 1
             }
         ],
-        generation: 1,
+        generation: 2,
         // Fast movement and fast work
-        bodyParts: [WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
+        // bodyParts: [WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
+        bodyParts: [WORK, CARRY, MOVE],
         max: MAX_TRANSFERERS,
         color: 'black'
     },
@@ -175,6 +180,7 @@ module.exports = {
     RICK,
     ALFRED,
     WOODHOUSE,
+    AMMON,
     CONSTRUCTION_QUEUE,
     ROLES,
     HP,

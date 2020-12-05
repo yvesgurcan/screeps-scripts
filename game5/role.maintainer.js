@@ -20,8 +20,7 @@ function maintainerRoutine(creep) {
             }
         });
         if (targets.length > 0) {
-            const targetIndex =
-                creep.memory.type === AMMON ? 0 : targets.length > 1 ? 1 : 0;
+            const targetIndex = creep.memory.type === AMMON ? 0 : 1;
             // creep.say('🔆maintain');
             if (
                 creep.transfer(targets[targetIndex], RESOURCE_ENERGY) ===
