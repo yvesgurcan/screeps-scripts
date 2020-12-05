@@ -1,10 +1,10 @@
 const MAX_HARVESTERS = 6;
-const MAX_MAINTAINERS = 1;
-const MAX_REPAIRERS = 4;
+const MAX_MAINTAINERS = 2;
+const MAX_REPAIRERS = 3;
 const MAX_REPAIRERS_VETUSTE = MAX_REPAIRERS + 3;
 const MAX_UPGRADERS = 1;
 const MAX_BUILDERS = 3;
-const MAX_BUILDERS_GRANDS_TRAVAUX = MAX_BUILDERS + 3;
+const MAX_BUILDERS_GRANDS_TRAVAUX = MAX_BUILDERS + 2;
 const MAX_TRANSFERERS = 2;
 const MAX_CLAIMERS = 0;
 
@@ -17,6 +17,7 @@ const WOODHOUSE = 'Woodhouse';
 const ALFRED = 'Alfred';
 
 const AMMON = 'Ammon';
+const GLADOS = 'Glados';
 
 const BETH = 'Beth';
 
@@ -112,11 +113,15 @@ const ROLES = {
         max: MAX_UPGRADERS,
         color: 'purple'
     },
+    // TODO: Replace this role with logic that spawns one maintainer per tower and harvest the source of energy closest to the tower
     maintainer: {
         name: 'maintainer',
-        types: [{ name: AMMON, ratio: 1 }],
-        generation: 5,
-        bodyParts: [WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE],
+        types: [
+            { name: AMMON, ratio: 0.5 },
+            { name: GLADOS, ratio: 0.5 }
+        ],
+        generation: 6,
+        bodyParts: [WORK, CARRY, CARRY, CARRY, MOVE, MOVE],
         max: MAX_MAINTAINERS,
         color: 'blue'
     },

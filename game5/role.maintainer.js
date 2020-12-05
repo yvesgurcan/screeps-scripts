@@ -1,11 +1,15 @@
 const builderRoutine = require('role.builder');
 const upgraderRoutine = require('role.upgrader');
-const { withdraw } = require('roleUtil');
-const { ROLES } = require('constants');
+const { withdraw, withdrawFromExtensions } = require('roleUtil');
+const { ROLES, AMMON } = require('constants');
 
 function maintainerRoutine(creep) {
     if (creep.store.getFreeCapacity() > 0) {
-        withdraw(creep, ROLES.maintainer.color);
+        if (creep.memory.type === AMMON) {
+            withdraw(creep, ROLES.maintainer.color);
+        } else {
+            withdrawFromExtensions(creep, ROLES.maintainer.color);
+        }
     } else {
         const targets = creep.room.find(FIND_STRUCTURES, {
             filter: structure => {
@@ -16,11 +20,14 @@ function maintainerRoutine(creep) {
             }
         });
         if (targets.length > 0) {
+            const targetIndex =
+                creep.memory.type === AMMON ? 0 : targets.length > 1 ? 1 : 0;
             // creep.say('🔆maintain');
             if (
-                creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE
+                creep.transfer(targets[targetIndex], RESOURCE_ENERGY) ===
+                ERR_NOT_IN_RANGE
             ) {
-                creep.moveTo(targets[0], {
+                creep.moveTo(targets[targetIndex], {
                     visualizePathStyle: { stroke: ROLES.maintainer.color }
                 });
             }
