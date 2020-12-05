@@ -82,6 +82,7 @@ function spawnCreeps() {
             for (const roleName in ROLES) {
                 roleCount++;
                 const role = ROLES[roleName];
+                const boostSpawnRule = role.boostSpawnRule || (() => false);
 
                 if (getBodyCost(role.bodyParts) > room.energy) {
                     cantAfford++;
@@ -90,10 +91,12 @@ function spawnCreeps() {
 
                 const creeps = getCreepsFromRole(role.name);
 
+                const extraCreep = boostSpawnRule(creeps, roomName);
+
                 // Gather roles that have a deficit in their number of creeps
-                if (creeps.length < role.max) {
+                if (creeps.length < role.max || extraCreep) {
                     // Figure out type
-                    let spawnType = ROLES[roleName].types[0].name;
+                    let spawnType = extraCreep || ROLES[roleName].types[0].name;
                     for (let i = 0; i < ROLES[roleName].types.length; i++) {
                         const type = ROLES[roleName].types[i];
                         const creepOfType = creeps.filter(
@@ -137,20 +140,6 @@ function spawnCreeps() {
             }
 
             if (cantAfford === roleCount) {
-                return;
-            }
-
-            const constructionSites = Game.rooms[roomName].find(
-                FIND_MY_CONSTRUCTION_SITES
-            ).length;
-
-            const builders = getCreepsFromRole('builder');
-            if (
-                constructionSites >= GRANDS_TRAVAUX &&
-                builders.length < MAX_BUILDERS_GRANDS_TRAVAUX
-            ) {
-                room.creepsQueueEmpty = false;
-                spawn('builder', RICK).from(room.spawns[0].name);
                 return;
             }
 

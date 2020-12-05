@@ -6,7 +6,7 @@ const {
 } = require('util');
 const constants = require('constants');
 const { ROLES, HP, ...selectedConstants } = constants;
-const { GRANDS_TRAVAUX, MAX_BUILDERS_GRANDS_TRAVAUX, ROOM_WIDTH } = constants;
+const { GRANDS_TRAVAUX, MAX_BUILDERS_GRANDS_TRAVAUX, VETUSTE } = constants;
 
 function gameInfo(reportAll = false) {
     try {
@@ -121,7 +121,9 @@ function gameInfo(reportAll = false) {
             ) {
                 room.decayedStructures = decayedStructures;
                 console.log(
-                    `Structures needing repair in room ${roomName}: ${room.decayedStructures.length}`
+                    `Structures needing repair in room ${roomName}: ${
+                        room.decayedStructures.length
+                    } (vétuste: ${decayedStructures.length >= VETUSTE})`
                 );
             }
 

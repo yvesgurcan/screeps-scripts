@@ -1,5 +1,3 @@
--   Add a `VETUSTE` mode that activates if more than 30 structures need repair. Spawn will increase number of repairers by 2 when room is in `VETUSTE` mode.
-
 -   Register in memory the list of dead energy sources for each room every 2 ticks.
 -   Replace harvesting-related logic that is tied to the availability of energy sources. Alternatively, develop better strategies based on whether an energy source is dead.
 
