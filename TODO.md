@@ -1,7 +1,9 @@
+-   Create a Corbusier type for builders with ratio 0.66. Alter behavior of builders of type "Corbusier" to repair if structures need repair and they don't have anything to build. Other types upgrade if they don't have anything to build.
+
+-   Builders should use all their energy in store to repair a wall/rampart they just constructed.
+
 -   Register in memory the list of dead energy sources for each room every 2 ticks.
 -   Replace harvesting-related logic that is tied to the availability of energy sources. Alternatively, develop better strategies based on whether an energy source is dead.
-
--   Create a Corbusier type for builders with ratio 0.66. Alter behavior of builders of type "Corbusier" to repair if structures need repair and they don't have anything to build. Other types upgrade if they don't have anything to build.
 
 -   If energy source dies and harvester has resources in their store, store these resources in extensions/containers.
 -   Calculate distance between a source of energy and a container to estimate number, speed, capacity (50 per carry part), and work (2 per work part) of Alfred harvesters.
