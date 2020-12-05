@@ -1,3 +1,4 @@
+-   Rename `gameInfo` to `gameMemory`.
 -   Add a "Memory version" variable. Update this version in memory if different from the script.
 -   Move `bodyParts` to memory. `bodyParts` must be updated if memory version differs.
 -   Add body parts dynamically to some roles if the room can afford it. The value of`canAffordMoreBodyParts` (a integer) is based on: how many extensions in the room (must be at least > 0), how many harvesters are alive (more harvesters means more body parts), and how much energy in the room (more energy means more body parts). The number of additional body parts must be capped (no more than 7 parts total).
